@@ -1,0 +1,491 @@
+/*
+Theme Name:     Feide Rnd Theme
+Theme URI:      http://rnd.feide.no
+Description:    Theme used for Feide RnD based upon twentyeleven
+Author:         Kasper Rynning-Tønnesen
+Author URI:     http://rnd.feide.no
+Template:       twentyeleven
+Version:        0.1.1
+*/
+
+@import url("../twentyeleven/style.css");
+
+@font-face{
+	font-family: 'colfaxThin';
+	src: url('fonts/colfaxThin.eot');
+	src: url('fonts/colfaxThin.eot?#iefix') format('embedded-opentype'),
+	     url('fonts/colfaxThin.woff') format('woff'),
+	     url('fonts/colfaxThin.ttf') format('truetype'),
+	     url('fonts/colfaxThin.svg#webfont') format('svg');
+}
+
+@font-face{
+	font-family: 'colfaxLight';
+	src: url('fonts/colfaxLight.eot');
+	src: url('fonts/colfaxLight.eot?#iefix') format('embedded-opentype'),
+	     url('fonts/colfaxLight.woff') format('woff'),
+	     url('fonts/colfaxLight.ttf') format('truetype'),
+	     url('fonts/colfaxLight.svg#webfont') format('svg');
+}
+
+@font-face{
+	font-family: 'colfaxRegular';
+	src: url('fonts/colfaxRegular.eot');
+	src: url('fonts/colfaxRegular.eot?#iefix') format('embedded-opentype'),
+	     url('fonts/colfaxRegular.woff') format('woff'),
+	     url('fonts/colfaxRegular.ttf') format('truetype'),
+	     url('fonts/colfaxRegular.svg#webfont') format('svg');
+}
+
+@font-face{
+	font-family: 'colfaxMedium';
+	src: url('fonts/colfaxMedium.eot');
+	src: url('fonts/colfaxMedium.eot?#iefix') format('embedded-opentype'),
+	     url('fonts/colfaxMedium.woff') format('woff'),
+	     url('fonts/colfaxMedium.ttf') format('truetype'),
+	     url('fonts/colfaxMedium.svg#webfont') format('svg');
+}
+
+body{
+	font: 15px 'colfaxRegular', Arial, sans-serif;
+	overflow-x:hidden;
+	padding:0;
+}
+
+ul{
+	list-style: none;
+}
+
+#page {
+	background:none;
+	max-width:none;
+	margin:auto;
+}
+
+.widget ul li {
+	background-image: url('img/li.png');
+	background-repeat: no-repeat;
+	background-position: 0px 8px;
+	padding-left: 14px;
+	line-height: 30px;
+}
+
+#branding {
+	border-top:none;
+	position:fixed;
+}
+
+hgroup, header a img, header form {
+	display:none !important;
+}
+
+#access{
+	background:white;
+	margin:auto;
+	width:100vw;
+	-webkit-box-shadow:none;
+	box-shadow:none;
+	padding:10px 0;
+}
+
+#access ul ul a{
+	border-bottom:none;
+}
+
+#access ul ul{
+	padding:15px 0 15px 15px;
+}
+
+#access ul ul ul {
+  top: -15px;
+}
+
+#access a:focus {
+	background:white;
+
+}
+
+.menu-main-menu-container{
+	max-width:1000px;
+	margin:auto !important;
+}
+
+#menu-main-menu li:first-child a, #menu-main-menu li:first-child a:hover, #menu-main-menu li:first-child a:focus{
+	background-image: url('img/UNINETT_logo.svg');
+	background-repeat: no-repeat;
+	padding-left: 160px;  /* width of the image plus a little extra padding */
+	display: block;  /* may not need this, but I've found I do */
+	background-position:8px;
+}
+
+.sub-menu li a {
+    background: none !important;
+    padding-left: 10px !important;
+    background-position: 0px !important;
+}
+
+input#s{
+	background: url(../twentyeleven/images/search.png) no-repeat 95% 6px;
+	padding: 4px 10px 4px 10px;
+}
+
+#main {
+	max-width:1000px;
+	margin:auto;
+}
+
+#content{
+	width:71.4%;
+	margin:0 34% 0 0%;
+}
+
+.hentry{
+	padding:20px 60px 60px 60px;
+	background:white;
+	word-wrap:break-word;
+}
+
+#nav-single{
+	padding:40px 40px 0px !important;
+}
+
+.singular.page .hentry{
+	padding:3.5em 0;
+}
+
+.singular .hentry {
+    padding: 4.875em 0 4em;
+}
+
+#primary, #secondary{
+	margin-top:60px !important;
+}
+
+.singular .entry-header .entry-meta{
+	position: absolute;
+  top: 40px;
+  left: 55px;
+}
+
+#secondary{
+	padding:3.5%;
+	margin-right:auto;
+	background:white;
+}
+
+#respond{
+	background:white;
+	padding:3.625em;
+	margin-top:25px;
+	width:auto;
+}
+
+#respond .comment-form-author label, #respond .comment-form-email label, #respond .comment-form-url label, #respond .comment-form-comment label{
+	-webkit-box-shadow: none;
+	box-shadow:none;
+	background:none;
+	top:45px;
+}
+
+#respond .comment-form-author .required, #respond .comment-form-email .required{
+	left:65%;
+}
+
+#respond input[type="text"], #respond textarea{
+	border:none;
+}
+
+#site-generator a {
+	display:none;
+}
+
+#site-generator{
+	background:none;
+}
+
+#site-generator:after{
+	background-image: url('img/Uninett_pil_rod.svg');
+  background-size: 7%;
+  background-position: 0% 50%;
+  content: "UNINETT AS 2013-2016";
+  background-repeat: no-repeat;
+  margin-left: -20px;
+  padding-left: 20px;
+}
+
+#respond .form-submit{
+	float:none;
+	margin:auto;
+}
+
+.error404 #primary{
+	background:white;
+	padding:30px 0px;
+}
+
+.error404 #main #searchform{
+	border:none;
+	background:none;
+}
+
+select{
+	background: white;
+  border-radius: 2px;
+  padding: 8px;
+}
+
+a:link {
+	color: #eb212e;
+	text-decoration: none;
+}
+a:visited {
+	color: #eb212e;
+}
+a:active,
+a:hover {
+	color: #000;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: "colfaxMedium", Helvetica, Arial, sans-serif;
+}
+
+#s {
+	width: 50%;
+  height: 10px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #555555;
+  vertical-align: middle;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+#s:focus {
+	border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.widget-area a:hover{
+	color:#000;
+	text-decoration: none;
+}
+
+.login-page-button{
+	font-family: 'colfaxMedium', Arial, sans-serif;
+  background-color: #f2f2f2 !important;
+  color: black !important;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  border-radius: 4px;
+  -webkit-user-select: none;
+-moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+.login-page-button:hover{
+	background-color: #dfdfdf !important;
+	border-color: #dfdfdf;
+}
+
+.widget-area a{
+	color:#eb212e;
+	font-size:14px;
+}
+
+#searchsubmit{
+	font-size: 3px; */
+  background: none;
+  color: transparent;
+  /* border: none; */
+  margin-left: -60px;
+  /* margin-top: -100px; */
+  padding-top: 0px;
+  display: none;
+}
+
+
+div.article blockquote {
+	border-left: 8px solid #eee;
+	margin-left: 3em;
+	padding-left: 1em;
+}
+div.article  h2 {
+	margin-top: 3em !important;
+	border-top: 1px solid #eee;
+}
+div.article  h3 a {
+	color: #543;
+	font-weight: bold;
+}
+div.article  h3 {
+	margin-top: 3em !important;
+
+}
+
+dl
+{
+	margin: 2em 0;
+	padding: 0;
+	font-family: georgia, times, serif;
+}
+
+dt code {
+	color: #484;
+		font-weight: light;
+	font-family: Monaco;
+}
+dt
+{
+	font-size: 85%;
+
+
+}
+
+dd
+{
+	border-left: 1px solid #ccc;
+	margin: 0 0 0 6em;
+	padding: 0 0 .5em .5em;
+}
+
+
+
+
+.page-title a:active,
+.page-title a:hover {
+	color: #444;
+}
+.entry-title a:active,
+.entry-title a:hover {
+	color: #444;
+}
+.navigation a:active,
+.navigation a:hover {
+	color: #444;
+}
+.comment-meta a:active,
+.comment-meta a:hover {
+	color: #444;
+}
+.reply a:hover,
+a.comment-edit-link:hover {
+	color: #444;
+}
+#respond .required {
+	color: #444;
+	font-weight: bold;
+}
+.widget_rss a.rsswidget:hover {
+	color: #444;
+}
+.page-link a:active,
+.page-link a:hover {
+	color: #444;
+}
+
+#access ul li.current_page_item > a, #access ul li.current_page_ancestor > a, #access ul li.current-menu-ancestor > a, #access ul li.current-menu-item > a, #access ul li.current-menu-parent > a {
+	color: #eb212e;
+	font-weight:normal;
+}
+
+div#branding img {
+	display: none;
+}
+
+div#wrapper {
+	/*border: 1px solid #ccc;*/
+	margin-top:0px;
+}
+div#header {
+	padding: 10px 0px 0px;
+}
+h1#site-title {
+	margin: 0px 0px 1px;
+}
+
+div#access {
+
+	border-radius: 9px;
+	-moz-border-radius: 9px;
+}
+
+#access a{
+	cursor:pointer;
+	color:#666464;
+}
+
+#access li:hover > a, #access ul ul :hover > a{
+	color:#000;
+}
+
+#access li:hover > a{
+	background: white;
+}
+
+#access ul ul a{
+	background:transparent;
+}
+
+.sub-menu{
+	background-color: #ffffff;
+	border: 1px solid #cccccc;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+	background-clip: padding-box;
+	border-top: none;
+	padding: 0 15px 10px;
+}
+
+div#access {
+	background:transparent;
+	/* Legacy browsers */
+	/*background: #111111 url("div-access-bg.png") repeat-x top;
+	-o-background-size: 100% 100%;
+	-moz-background-size: 100% 100%;
+	-webkit-background-size: 100% 100%;
+	background-size: 100% 100%;*/
+	/* Internet Explorer */
+	/*background: #111111;
+	background: #111111\0/;
+	filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr=#FF555555, endColorstr=#FF111111);
+	}
+	@media all and (min-width: 0px) {
+		div#access {
+			/* Opera
+			background: #111111 url("div-access-bg.svg");
+			/* Recent browsers
+			background-image: -moz-linear-gradient(
+				top,
+				#555555,
+				#111111
+			);
+			background-image: -webkit-gradient(
+				linear,
+				left top, left bottom,
+				from(#555555),
+				to(#111111)
+			);
+		}*/
+	}
