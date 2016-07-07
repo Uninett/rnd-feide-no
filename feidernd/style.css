@@ -489,3 +489,45 @@ div#access {
 			);
 		}*/
 	}
+
+@media (max-width: 800px) {
+	#branding{
+		position:initial;
+	}
+	#menu-main-menu li:first-child a, #menu-main-menu li:first-child a:hover, #menu-main-menu li:first-child a:focus {
+		background:none;
+		padding-left: 0px;
+	}
+
+	#primary, #secondary{
+		margin-top:0px !important;
+	}
+
+	#main #content{
+		margin:0px;
+	}
+
+	.hentry {
+    padding: 20px 10px 60px 10px;
+    background: white;
+    word-wrap: break-word;
+    width: 96%;
+	}
+
+	.singular .hentry{
+		width:100%;
+	}
+
+	#access div{
+		margin: 0 7.6% !important;
+	}
+	.nav-next{
+		margin:0 40px 0;
+		width:auto;
+	}
+
+	.nav-previous{
+		margin: 0 0 0 40px;
+		width:auto;
+	}
+}
