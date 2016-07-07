@@ -50,6 +50,7 @@ body{
 	font: 15px 'colfaxRegular', Arial, sans-serif;
 	overflow-x:hidden;
 	padding:0;
+	background: #eeebe8;
 }
 
 ul{
@@ -65,7 +66,7 @@ ul{
 .widget ul li {
 	background-image: url('img/li.png');
 	background-repeat: no-repeat;
-	background-position: 0px 8px;
+	background-position: 0px 10px;
 	padding-left: 14px;
 	line-height: 30px;
 }
@@ -108,6 +109,14 @@ hgroup, header a img, header form {
 .menu-main-menu-container{
 	max-width:1000px;
 	margin:auto !important;
+}
+
+.entry-title a {
+	color:#333 !important;
+}
+
+.entry-title a:hover {
+	color:#111 !important;
 }
 
 #menu-main-menu li:first-child a, #menu-main-menu li:first-child a:hover, #menu-main-menu li:first-child a:focus{
@@ -205,12 +214,15 @@ input#s{
 
 #site-generator:after{
 	background-image: url('img/Uninett_pil_rod.svg');
-  background-size: 7%;
-  background-position: 0% 50%;
-  content: "UNINETT AS 2013-2016";
-  background-repeat: no-repeat;
-  margin-left: -20px;
-  padding-left: 20px;
+	background-size: 7%;
+	background-position: 0% 50%;
+	content: "UNINETT AS 2013-2016";
+	background-repeat: no-repeat;
+	margin-left: -20px;
+	padding-left: 20px;
+	font-family: 'colfaxMedium';
+	color: #333;
+	font-size: 16PX;
 }
 
 #respond .form-submit{
@@ -278,6 +290,13 @@ h1, h2, h3, h4, h5, h6 {
 .widget-area a:hover{
 	color:#000;
 	text-decoration: none;
+}
+
+.widget a{
+	font-weight:normal;
+}
+.widget-title{
+	color:#333;
 }
 
 .login-page-button{

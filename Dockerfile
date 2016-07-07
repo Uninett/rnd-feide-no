@@ -22,5 +22,5 @@ RUN rm /tmp/rnd.extras.tar.gz
 
 VOLUME volume/ /var/www/
 
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["apache2-foreground"]
+#ENTRYPOINT ["/entrypoint.sh"]
+#CMD ["apache2-foreground"]
