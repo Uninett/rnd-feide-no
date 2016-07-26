@@ -1,4 +1,4 @@
-FROM wordpress
+FROM wordpress:fpm
 
 ENV PHPREDIS_VERSION 2.2.8
 
