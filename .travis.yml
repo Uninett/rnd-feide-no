@@ -1,40 +1,49 @@
 sudo: false
-language: python
+language: php
+# Cache our Gcloud SDK between commands
 cache:
   directories:
-  - $HOME/google-cloud-sdk/
-env:
-- GAE_PYTHONPATH=${HOME}/.cache/google_appengine PATH=$PATH:${HOME}/google-cloud-sdk/bin
-  PYTHONPATH=${PYTHONPATH}:${GAE_PYTHONPATH} CLOUDSDK_CORE_DISABLE_PROMPTS=1
-# Ensure the downloaded SDK is first on the PATH
-- PATH=${HOME}/google-cloud-sdk/bin:$PATH
-# Ensure the install happens without prompts
-- CLOUDSDK_CORE_DISABLE_PROMPTS=1
-before_install:
+  - "$HOME/google-cloud-sdk/"
+notifications:
+  on_success: never
+  on_failure: change
 
-- if [ ! -d "${GAE_PYTHONPATH}" ]; then python scripts/fetch_gae_sdk.py $(dirname
-  "${GAE_PYTHONPATH}"); fi
-- if [ ! -d ${HOME}/google-cloud-sdk ]; then curl https://sdk.cloud.google.com | bash;
-  fi
-- tar -xzf credentials.tar.gz
-- mkdir -p lib
-- gcloud auth activate-service-account --key-file client-secret.json
-install:
-# Make sure SDK is downloaded - cache once it's working
-# NOTE: Note sure how to update the SDK if it's cached
-- curl https://sdk.cloud.google.com | bash;
-# List the SDK contents to ensure it's downloaded
-- ls -l ${HOME}/google-cloud-sdk/bin
-# Ensure the correct gcloud is being used
-- which gcloud
-# Print the gcloud version and make sure it's something
-# Reasonably up to date compared with:
-# https://cloud.google.com/sdk/downloads#versioned
-- gcloud --version
-- gcloud config set project test
-- gcloud -q components update gae-python
-#- pip install -r requirements.txt -t lib/
+php:
+  - nightly # PHP 7.0
+  - 5.6
+  - 5.5
+  - 5.4
+
+env:
+  - WP_PROJECT_TYPE=plugin WP_VERSION=latest WP_MULTISITE=0 WP_TEST_URL=http://localhost:12000 WP_TEST_USER=test WP_TEST_USER_PASS=test
+  # Make sure gcloud command is on our PATH and the App Engine SDK is in the Python path
+  - GAE_PYTHONPATH=${HOME}/.cache/google_appengine PATH=$PATH:${HOME}/google-cloud-sdk/bin PYTHONPATH=${PYTHONPATH}:${GAE_PYTHONPATH} CLOUDSDK_CORE_DISABLE_PROMPTS=1
+
+matrix:
+  allow_failures:
+    - php: nightly
+
+before_script:
+  - git clone https://github.com/Seravo/wordpress-test-template wp-tests
+  - bash wp-tests/bin/install-wp-tests.sh test root '' localhost $WP_VERSION
+
 script:
-# - python test_main.py
-- gcloud -q preview app deploy app.yaml --promote
-#- python e2e_test.py
+  - cd wp-tests/spec && bundle exec rspec test.rb
+
+before_install:
+  # Install Google App Engine Python SDK
+  - if [ ! -d "${GAE_PYTHONPATH}" ]; then
+      python scripts/fetch_gae_sdk.py $(dirname "${GAE_PYTHONPATH}");
+    fi
+  # If the SDK is not already cached, download it and unpack it
+  - if [ ! -d ${HOME}/google-cloud-sdk ]; then
+       curl https://sdk.cloud.google.com | bash;
+    fi
+  - tar -xzf credentials.tar.gz
+  - mkdir -p lib
+  # Here we use the decrypted service account credentials to authenticate the command line tool
+  - gcloud auth activate-service-account --key-file client-secret.json
+  # [END auth]
+install:
+  # Set the correct project to deploy to
+  - gcloud config set project uninett-wordpress-theme
