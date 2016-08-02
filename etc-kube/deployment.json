@@ -1,0 +1,52 @@
+{
+	"apiVersion": "extensions/v1beta1",
+	"kind": "Deployment",
+	"metadata": {
+		"name": "feidernd"
+	},
+	"spec": {
+		"replicas": 1,
+		"template": {
+			"metadata": {
+				"labels": {
+					"app": "feidernd",
+					"appid": "feidernd"
+				}
+			},
+			"spec": {
+				"containers": [{
+					"name": "smedstua",
+					"image": "uninett-no/feide-rnd:1.0.5",
+					"resources": {
+						"requests": {
+							"cpu": "10m"
+						},
+						"limits": {
+							"cpu": "300m"
+						}
+					},
+					"env": [{
+						"name": "TEST",
+						"value": "VALUE"
+					}],
+					"imagePullPolicy": "Always",
+					"ports": [{
+						"containerPort": 80
+					}],
+					"volumeMounts": [{
+						"name": "feidernd",
+						"mountPath": "/etc/secrets",
+						"readOnly": true
+					}]
+				}],
+				"restartPolicy": "Always",
+				"volumes": [{
+					"name": "feidernd",
+					"secret": {
+						"secretName": "feidernd"
+					}
+				}]
+			}
+		}
+	}
+}
