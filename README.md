@@ -1,5 +1,7 @@
 # rnd.feide.no
 
+Testing release 0.0.2
+
 A blog about identity, technology etc.
 
 This repository holds the `Dockerfile` building the blog environment, as well as kubernetes config files, and build and deployment scripts.
