@@ -23,7 +23,6 @@ kubectl --namespace production get pods
 kubectl --namespace production get ing
 kubectl --namespace production describe ingress uninett-ingress
 
-
 kubectl --namespace production logs -f feidernd-2511762231-jl76h
 
 Update ingress
