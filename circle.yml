@@ -4,6 +4,7 @@ machine:
     CLUSTER_NAME: cluster-1
     CLOUDSDK_COMPUTE_ZONE: europe-west1-c
     DEBIAN_FRONTEND: noninteractive
+    CONTAINER_NAME: rnd-feide-no
   services:
     - docker
 
@@ -27,10 +28,9 @@ dependencies:
     # - kubectl config view
     - kubectl get pods
     - kubectl get serviceaccounts
-    - docker build -t eu.gcr.io/${PROJECT_NAME}/hello:$CIRCLE_SHA1 .
+    - docker build -t eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}:$CIRCLE_SHA1 .
     # Using a separate tag command until Docker 1.10 is available on CircleCI, then we can use two tags in the build command above
-    - docker tag eu.gcr.io/${PROJECT_NAME}/hello:$CIRCLE_SHA1 eu.gcr.io/${PROJECT_NAME}/hello:latest
-
+    - gcloud docker push
 
 
 # Automatically configure kubectl
@@ -40,12 +40,19 @@ dependencies:
 
 # test:
 #   post:
-#     - docker run -d -p 3000:3000 -e "SECRET_KEY_BASE=abcd1234" eu.gcr.io/${PROJECT_NAME}/hello:$CIRCLE_SHA1; sleep 10
+#     - docker run -d -p 3000:3000 -e "SECRET_KEY_BASE=abcd1234" eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}:$CIRCLE_SHA1; sleep 10
 #     - curl --retry 10 --retry-delay 5 -v http://localhost:3000
 
 deployment:
-  prod:
+  preprod:
     branch: master
     commands:
-      - echo "Yay project eu.gcr.io/${PROJECT_NAME}/hello:$CIRCLE_SHA1"
-      - bin/deploy-gke.sh
+      - echo "Yay project eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}:testing-$CIRCLE_BUILD_NUM"
+      - docker tag eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}:$CIRCLE_SHA1 eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}:testing-${CIRCLE_BUILD_NUM}
+      - gcloud docker push eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}
+  prod:
+    branch: stable
+    commands:
+      - echo "Yay project eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}:stable-$CIRCLE_BUILD_NUM"
+      - docker tag eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}:$CIRCLE_SHA1 eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}:stable-${CIRCLE_BUILD_NUM}
+      - gcloud docker push eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}
