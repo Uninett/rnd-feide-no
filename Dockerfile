@@ -1,4 +1,4 @@
-FROM wordpress:fpm
+FROM wordpress:4.5.3-apache
 
 # ENV PHPREDIS_VERSION 2.2.8
 #
