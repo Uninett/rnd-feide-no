@@ -17,7 +17,7 @@ dependencies:
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet config set container/cluster $CLUSTER_NAME
     # Reading the zone from the env var is not working so we set it here
     - sudo /opt/google-cloud-sdk/bin/gcloud config set compute/zone ${CLOUDSDK_COMPUTE_ZONE}
-    # - sudo /opt/google-cloud-sdk/bin/gcloud --quiet container clusters get-credentials $CLUSTER_NAME
+    - sudo /opt/google-cloud-sdk/bin/gcloud --quiet container clusters get-credentials $CLUSTER_NAME
     # - sudo chown -R ubuntu:ubuntu ${HOME}/.kube
     - kubectl config set-credentials circleci --token=${GKE_SERVICE_TOKEN}
     - kubectl --user circleci --namespace production get pods
