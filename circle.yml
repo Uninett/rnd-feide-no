@@ -24,8 +24,8 @@ dependencies:
     - kubectl config set-context gce --user=circleci --cluster=cluster-1 --namespace=production
     - kubectl config use-context gce
     - kubectl config view
-    
-    - kubectl --user circleci --namespace production get pods
+
+    - kubectl --user circleci --token=${GKE_SERVICE_TOKEN} --namespace production get pods
     - docker build -t eu.gcr.io/${PROJECT_NAME}/hello:$CIRCLE_SHA1 .
     # Using a separate tag command until Docker 1.10 is available on CircleCI, then we can use two tags in the build command above
     - docker tag eu.gcr.io/${PROJECT_NAME}/hello:$CIRCLE_SHA1 eu.gcr.io/${PROJECT_NAME}/hello:latest
