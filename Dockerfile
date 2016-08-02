@@ -1,18 +1,18 @@
 FROM wordpress:fpm
 
-ENV PHPREDIS_VERSION 2.2.8
-
-RUN apt-get update && apt-get install -yqq unzip git php5-redis redis-tools
-RUN curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/$PHPREDIS_VERSION.tar.gz \
-    && tar xfz /tmp/redis.tar.gz \
-    && rm -r /tmp/redis.tar.gz \
-    && mv phpredis-$PHPREDIS_VERSION /usr/src/php/ext/redis \
-    && docker-php-ext-install redis
-
-RUN { \
-    echo 'session.save_handler = redis'; \
-    echo 'session.save_path = tcp://redis:6379'; \
-} >> /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
+# ENV PHPREDIS_VERSION 2.2.8
+#
+# RUN apt-get update && apt-get install -yqq unzip git php5-redis redis-tools
+# RUN curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/$PHPREDIS_VERSION.tar.gz \
+#     && tar xfz /tmp/redis.tar.gz \
+#     && rm -r /tmp/redis.tar.gz \
+#     && mv phpredis-$PHPREDIS_VERSION /usr/src/php/ext/redis \
+#     && docker-php-ext-install redis
+#
+# RUN { \
+#     echo 'session.save_handler = redis'; \
+#     echo 'session.save_path = tcp://redis:6379'; \
+# } >> /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
 
 RUN curl -o /tmp/composer.phar http://getcomposer.org/composer.phar \
   && mv /tmp/composer.phar /usr/local/bin/composer
