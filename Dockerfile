@@ -2,7 +2,7 @@ FROM wordpress:4.5.3-apache
 
 # ENV PHPREDIS_VERSION 2.2.8
 
-RUN apt-get update && apt-get install -yqq unzip git 
+RUN apt-get update && apt-get install -yqq unzip git
 # RUN curl -L -o /tmp/redis.tar.gz https://github.com/phpredis/phpredis/archive/$PHPREDIS_VERSION.tar.gz \
 #    && tar xfz /tmp/redis.tar.gz \
 #    && rm -r /tmp/redis.tar.gz \
@@ -36,7 +36,7 @@ RUN git clone https://github.com/Otto42/simple-twitter-connect.git /usr/share/wo
 
 RUN rm -rf /tmp/stc.zip && rm -rf /tmp/stc && rm -rf /tmp/markdown.zip
 
-ADD etc/composer.json /usr/src/composer.json
+COPY etc/composer.json /usr/src/composer.json
 
 RUN chmod a+x /usr/local/bin/composer
 RUN cd /usr/src/ && /usr/local/bin/composer install

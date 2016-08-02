@@ -14,6 +14,7 @@ kubectl create --namespace production -f etc-kube/deployment.json
 kubectl create --namespace production -f etc-kube/service.json
 kubectl create --namespace production -f etc-kube/ingress-ssl.yaml
 kubectl create --namespace production -f etc-kube/ingress.yaml
+kubectl --namespace production create -f etc-kube/serviceAccount.yaml
 ```
 
 
@@ -27,4 +28,12 @@ kubectl --namespace production logs -f feidernd-2511762231-jl76h
 
 Update ingress
 kubectl --namespace production replace -f etc-kube/ingress.yaml
+```
+
+
+Get service account:
+
+```
+kubectl --namespace production get serviceaccounts/circleci -o yaml
+kubectl --namespace production get secrets/circleci-token-e78a4 -o yaml
 ```
