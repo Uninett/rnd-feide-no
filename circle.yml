@@ -12,12 +12,17 @@ dependencies:
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update kubectl
     - echo $GKE_SERVICE_ACCOUNT | base64 --decode -i > ${HOME}/account-auth.json
-    - sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file ${HOME}/account-auth.json
+    # - sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file ${HOME}/account-auth.json
     - sudo /opt/google-cloud-sdk/bin/gcloud config set project $PROJECT_NAME
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet config set container/cluster $CLUSTER_NAME
     # Reading the zone from the env var is not working so we set it here
     - sudo /opt/google-cloud-sdk/bin/gcloud config set compute/zone ${CLOUDSDK_COMPUTE_ZONE}
-    - sudo /opt/google-cloud-sdk/bin/gcloud --quiet container clusters get-credentials $CLUSTER_NAME
+    # - sudo /opt/google-cloud-sdk/bin/gcloud --quiet container clusters get-credentials $CLUSTER_NAME
+    - sudo chown -R ubuntu:ubuntu ${HOME}/.kube
+    - kubectl config set-credentials circleci --token=${GKE_SERVICE_TOKEN}
+    - kubectl --user circleci --namespace production get pods
+
+
     - docker build -t eu.gcr.io/${PROJECT_NAME}/hello:$CIRCLE_SHA1 .
     # Using a separate tag command until Docker 1.10 is available on CircleCI, then we can use two tags in the build command above
     - docker tag eu.gcr.io/${PROJECT_NAME}/hello:$CIRCLE_SHA1 eu.gcr.io/${PROJECT_NAME}/hello:latest
@@ -32,3 +37,4 @@ deployment:
     branch: master
     commands:
       - echo "Yay project eu.gcr.io/${PROJECT_NAME}/hello:$CIRCLE_SHA1"
+      - bin/deploy-gke.sh
