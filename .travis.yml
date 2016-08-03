@@ -1,34 +1,36 @@
 sudo: required
-
 language: php
+deploy:
+  provider: gae
+  keyfile: client-secret.json
+  project: galvanic-being-138423
 cache:
   directories:
   - $HOME/google-cloud-sdk/
 env:
-  - GAE_PYTHONPATH=${HOME}/.cache/google_appengine PATH=$PATH:${HOME}/google-cloud-sdk/bin
-    PYTHONPATH=${PYTHONPATH}:${GAE_PYTHONPATH} CLOUDSDK_CORE_DISABLE_PROMPTS=1
+- GAE_PYTHONPATH=${HOME}/.cache/google_appengine PATH=$PATH:${HOME}/google-cloud-sdk/bin
+  PYTHONPATH=${PYTHONPATH}:${GAE_PYTHONPATH} CLOUDSDK_CORE_DISABLE_PROMPTS=1
 services:
-  - docker
-
+- docker
 before_install:
-  - docker build -t testbuild .
-  - if [ ! -d "${GAE_PYTHONPATH}" ]; then python scripts/fetch_gae_sdk.py $(dirname
-    "${GAE_PYTHONPATH}"); fi
-  - if [ ! -d ${HOME}/google-cloud-sdk ]; then curl https://sdk.cloud.google.com | bash;
-    fi
-  - tar -xzf credentials.tar.gz
-  - mkdir -p lib
-  - gcloud auth activate-service-account --key-file client-secret.json
+- openssl aes-256-cbc -K $encrypted_3f161a591f6d_key -iv $encrypted_3f161a591f6d_iv
+  -in credentials.tar.gz.enc -out credentials.tar.gz -d
+- docker build -t testbuild .
+- ssh-keygen -q -N "" -f ~/.ssh/google_compute_engine
+- rm -rf ${HOME}/google-cloud-sdk/
+- curl https://sdk.cloud.google.com | bash;
+- ls -l ${HOME}/google-cloud-sdk/bin
+- if [ ! -d "${GAE_PYTHONPATH}" ]; then python scripts/fetch_gae_sdk.py $(dirname
+  "${GAE_PYTHONPATH}"); fi
+- if [ ! -d ${HOME}/google-cloud-sdk ]; then curl https://sdk.cloud.google.com | bash;
+  fi
+- tar -xzf credentials.tar.gz
+- mkdir -p lib
+- gcloud auth activate-service-account --key-file client-secret.json
 install:
-  # Make sure SDK is downloaded - cache once it's working
-  # NOTE: Note sure how to update the SDK if it's cached
-  - curl https://sdk.cloud.google.com | bash;
-  # List the SDK contents to ensure it's downloaded
-  - ls -l ${HOME}/google-cloud-sdk/bin
-  # Ensure the correct gcloud is being used
-  - which gcloud
-  # Print the gcloud version and make sure it's something
-  # Reasonably up to date compared with:
-  # https://cloud.google.com/sdk/downloads#versioned
-  - gcloud --version
-  - gcloud config set project uninett-wordpress-theme
+- curl https://sdk.cloud.google.com | bash;
+- ls -l ${HOME}/google-cloud-sdk/bin
+- which gcloud
+- gcloud --version
+- gcloud config set project uninett-wordpress-theme
+- gcloud -q preview app deploy
