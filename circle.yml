@@ -66,6 +66,8 @@ deployment:
       - echo "Deployment [MASTER / Preprod] ${IMAGE}"
       - echo "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"${KUBERNETES_DEPLOYMENT}\",\"image\":\"${IMAGE}\"}]}}}}"
       - kubectl patch deployment ${KUBERNETES_DEPLOYMENT} -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"${KUBERNETES_DEPLOYMENT}\",\"image\":\"${IMAGE}\"}]}}}}"
+      - mysql --version
+      - mysqlump --version
   prod:
     branch: stable
     commands:
