@@ -33,8 +33,8 @@ dependencies:
     - kubectl get serviceaccounts
     # Using a separate tag command until Docker 1.10 is available on CircleCI, then we can use two tags in the build command above
     # - gcloud docker push
-    - echo "ENV CBUILDNUM ${CIRCLE_BUILD_NUM}" > ./Dockerfile
-    - echo "ENV CBRANCH ${CIRCLE_BRANCH}" > ./Dockerfile
+    - echo "ENV CBUILDNUM ${CIRCLE_BUILD_NUM}" >> ./Dockerfile
+    - echo "ENV CBRANCH ${CIRCLE_BRANCH}" >> ./Dockerfile
     - cat Dockerfile
     - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
     - docker build -t ${IMAGE} .
