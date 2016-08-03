@@ -62,7 +62,7 @@ deployment:
     branch: master
     commands:
       - echo "Deployment [MASTER / Preprod] ${IMAGE}"
-      - kubectl patch deployment rnd-feide-no -p '{"spec":{"template":{"spec":{"containers":[{"name":"docker-hello-google","image":"us.gcr.io/circle-ctl-test/hello:'"$CIRCLE_SHA1"'"}]}}}}'
+      - kubectl patch deployment rnd-feide-no -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"feidernd\",\"image\":\"${IMAGE}\"}]}}}}"
   prod:
     branch: stable
     commands:
