@@ -26,6 +26,18 @@ kubectl create --namespace production -f etc-kube/service-testing.json
 kubectl create --namespace production -f etc-kube/ingress-testing.yaml
 ```
 
+### Setting up firewall on GKE_SERVICE_TOKEN
+
+```
+export TAG=$(gcloud compute instances describe $NODE --format="value(tags.items[0])")
+export NODE_PORT=$(kubectl --namespace production get -o jsonpath="{.spec.ports[0].nodePort}" services feidernd-testing)
+gcloud compute firewall-rules create feidernd-testing-allow-130-211-0-0-22 --source-ranges 130.211.0.0/22 --target-tags $TAG --allow tcp:$NODE_PORT
+
+
+export NODE_PORTP=$(kubectl --namespace production get -o jsonpath="{.spec.ports[0].nodePort}" services feidernd)
+gcloud compute firewall-rules create feidernd-allow-130-211-0-0-22 --source-ranges 130.211.0.0/22 --target-tags $TAG --allow tcp:$NODE_PORTP
+```
+
 
 ----
 
