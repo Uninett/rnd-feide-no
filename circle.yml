@@ -62,6 +62,7 @@ deployment:
     branch: master
     commands:
       - echo "Deployment [MASTER / Preprod] ${IMAGE}"
+      - echo "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"feidernd\",\"image\":\"${IMAGE}\"}]}}}}"
       - kubectl patch deployment rnd-feide-no -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"feidernd\",\"image\":\"${IMAGE}\"}]}}}}"
   prod:
     branch: stable
