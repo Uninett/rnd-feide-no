@@ -1,0 +1,139 @@
+{
+	"apiVersion": "extensions/v1beta1",
+	"kind": "Deployment",
+	"metadata": {
+		"name": "feidernd"
+	},
+	"spec": {
+		"replicas": 1,
+		"template": {
+			"metadata": {
+				"labels": {
+					"app": "feidernd",
+					"appid": "feidernd"
+				}
+			},
+			"spec": {
+				"containers": [{
+					"name": "feidernd",
+					"image": "uninettno/rnd-feide-no:0.0.3",
+					"resources": {
+						"requests": {
+							"cpu": "10m"
+						},
+						"limits": {
+							"cpu": "300m"
+						}
+					},
+					"env": [
+            {
+  						"name": "WORDPRESS_DB_HOST",
+  						"valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd",
+                  "key": "dbhost"
+                }
+              }
+  					},
+            {
+  						"name": "WORDPRESS_DB_USER",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd",
+                  "key": "dbuser"
+                }
+              }
+  					},
+            {
+  						"name": "WORDPRESS_DB_PASSWORD",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd",
+                  "key": "dbpassword"
+                }
+              }
+  					},
+            {
+  						"name": "WORDPRESS_DB_NAME",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd",
+                  "key": "dbname"
+                }
+              }
+  					},
+            {
+  						"name": "HOST",
+  						"value": "rnd.feide.no"
+  					},
+            {
+  						"name": "TLS",
+  						"value": "false"
+  					},
+            {
+  						"name": "DATAPORTEN_CLIENTID",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd",
+                  "key": "dataporten-clientid"
+                }
+              }
+  					},
+            {
+  						"name": "DATAPORTEN_CLIENTSECRET",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd",
+                  "key": "dataporten-clientsecret"
+                }
+              }
+  					},
+            {
+  						"name": "DATAPORTEN_SCOPES",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd",
+                  "key": "dataporten-scopes"
+                }
+              }
+  					},
+            {
+  						"name": "DATAPORTEN_ROLESETS",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd",
+                  "key": "dataporten-rolesets"
+                }
+              }
+  					},
+            {
+  						"name": "DATAPORTEN_DEFAULT_ROLE_ENABLED",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd",
+                  "key": "dataporten-default-role-enabled"
+                }
+              }
+  					}
+          ],
+					"imagePullPolicy": "Always",
+					"ports": [{
+						"containerPort": 80
+					}],
+					"volumeMounts": [{
+						"name": "feidernd",
+						"mountPath": "/etc/secrets",
+						"readOnly": true
+					}]
+				}],
+				"restartPolicy": "Always",
+				"volumes": [{
+					"name": "feidernd",
+					"secret": {
+						"secretName": "feidernd"
+					}
+				}]
+			}
+		}
+	}
+}
