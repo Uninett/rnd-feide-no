@@ -42,17 +42,16 @@ dependencies:
     - echo "ENV CBRANCH ${CIRCLE_BRANCH}" >> ./Dockerfile
     - cat Dockerfile
 
-    - setenv DBHOST `kubectl --namespace production get secrets feidernd  -o 'go-template={{index .data "dbhost"}}' | base64 --decode`
-    - setenv DBNAME `kubectl --namespace production get secrets feidernd  -o 'go-template={{index .data "dbname"}}' | base64 --decode`
-    - setenv DBUSER `kubectl --namespace production get secrets feidernd  -o 'go-template={{index .data "dbuser"}}' | base64 --decode`
-    - setenv DBPASSWORD `kubectl --namespace production get secrets feidernd  -o 'go-template={{index .data "dbpassword"}}' | base64 --decode`
-    - setenv TESTING_DBHOST `kubectl --namespace production get secrets feidernd-testing  -o 'go-template={{index .data "dbhost"}}' | base64 --decode`
-    - setenv TESTING_DBNAME `kubectl --namespace production get secrets feidernd-testing  -o 'go-template={{index .data "dbname"}}' | base64 --decode`
-    - setenv TESTING_DBUSER `kubectl --namespace production get secrets feidernd-testing  -o 'go-template={{index .data "dbuser"}}' | base64 --decode`
-    - setenv TESTING_DBPASSWORD `kubectl --namespace production get secrets feidernd-testing  -o 'go-template={{index .data "dbpassword"}}' | base64 --decode`
+    - export DBHOST=`kubectl --namespace production get secrets feidernd  -o 'go-template={{index .data "dbhost"}}' | base64 --decode`
+    - export DBNAME=`kubectl --namespace production get secrets feidernd  -o 'go-template={{index .data "dbname"}}' | base64 --decode`
+    - export DBUSER=`kubectl --namespace production get secrets feidernd  -o 'go-template={{index .data "dbuser"}}' | base64 --decode`
+    - export DBPASSWORD=`kubectl --namespace production get secrets feidernd  -o 'go-template={{index .data "dbpassword"}}' | base64 --decode`
+    - export TESTING_DBHOST=`kubectl --namespace production get secrets feidernd-testing  -o 'go-template={{index .data "dbhost"}}' | base64 --decode`
+    - export TESTING_DBNAME=`kubectl --namespace production get secrets feidernd-testing  -o 'go-template={{index .data "dbname"}}' | base64 --decode`
+    - export TESTING_DBUSER=`kubectl --namespace production get secrets feidernd-testing  -o 'go-template={{index .data "dbuser"}}' | base64 --decode`
+    - export TESTING_DBPASSWORD=`kubectl --namespace production get secrets feidernd-testing  -o 'go-template={{index .data "dbpassword"}}' | base64 --decode`
 
-    - echo "mysqldump -u ${DBUSER} --password="xxx" -h ${DBHOST} --all-databases"
-    - echo "mysql -u ${TESTING_DBUSER} --password="xxx" -h ${TESTING_DBHOST} ${TESTING_DBNAME}"
+    - ./bin/migratedb.sh
 
     - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
     - docker build -t ${IMAGE} .
@@ -85,7 +84,7 @@ deployment:
       - echo "Deployment [MASTER / Preprod] ${IMAGE}"
       - echo "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"${KUBERNETES_DEPLOYMENT}\",\"image\":\"${IMAGE}\"}]}}}}"
       - kubectl patch deployment ${KUBERNETES_DEPLOYMENT} -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"${KUBERNETES_DEPLOYMENT}\",\"image\":\"${IMAGE}\"}]}}}}"
-      - mysqldump -u ${DBUSER} --password="${DBPASSWORD}" -h ${DBHOST} --all-databases | mysql -u ${TESTING_DBUSER} --password="${TESTING_DBPASSWORD}" -h ${TESTING_DBHOST} ${TESTING_DBNAME}
+      # - mysqldump -u ${DBUSER} --password="${DBPASSWORD}" -h ${DBHOST} --all-databases | mysql -u ${TESTING_DBUSER} --password="${TESTING_DBPASSWORD}" -h ${TESTING_DBHOST} ${TESTING_DBNAME}
   prod:
     branch: stable
     commands:
