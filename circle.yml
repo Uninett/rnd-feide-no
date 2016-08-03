@@ -14,7 +14,7 @@ machine:
 
 dependencies:
   pre:
-    - echo ${IMAGE}
+    - sudo apt-get update; sudo apt-get install mysql-client
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update kubectl
     # This is not really used right now..
@@ -42,6 +42,8 @@ dependencies:
     - docker build -t ${IMAGE} .
     # - docker tag ${IMAGE_BASE}:$CIRCLE_SHA1 ${IMAGE_BASE}:testing-${CIRCLE_BUILD_NUM}
     - docker push ${IMAGE_BASE}
+    - export DBHOST=`kubectl --namespace production get secrets feidernd  -o 'go-template={{index .data "dbhost"}}' | base64 -D`
+    - export DBHOST=`kubectl --namespace production get secrets feidernd  -o 'go-template={{index .data "dbhost"}}' | base64 -D`
 
 # Automatically configure kubectl
     # - sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file ${HOME}/account-auth.json
