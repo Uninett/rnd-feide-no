@@ -29,6 +29,7 @@ dependencies:
     - kubectl config set-context gce --user=admin --cluster=cluster-1 --namespace=production
     - kubectl config use-context gce
     # - kubectl config view
+    - kubectl version
     - kubectl get pods
     - kubectl get serviceaccounts
     # Using a separate tag command until Docker 1.10 is available on CircleCI, then we can use two tags in the build command above
