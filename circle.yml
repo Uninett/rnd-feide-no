@@ -13,6 +13,7 @@ machine:
 
 dependencies:
   pre:
+    - echo ${IMAGE}
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update kubectl
     # This is not really used right now..
