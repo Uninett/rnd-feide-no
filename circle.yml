@@ -8,6 +8,7 @@ machine:
     IMAGE_BASE: uninettno/rnd-feide-no
     IMAGE: ${IMAGE_BASE}:build-${CIRCLE_BUILD_NUM}
     KUBERNETES_SERVER: https://104.155.105.25
+    KUBERNETES_DEPLOYMENT: feidernd
   services:
     - docker
 
@@ -63,8 +64,8 @@ deployment:
     branch: master
     commands:
       - echo "Deployment [MASTER / Preprod] ${IMAGE}"
-      - echo "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"feidernd\",\"image\":\"${IMAGE}\"}]}}}}"
-      - kubectl patch deployment rnd-feide-no -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"feidernd\",\"image\":\"${IMAGE}\"}]}}}}"
+      - echo "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"${KUBERNETES_DEPLOYMENT}\",\"image\":\"${IMAGE}\"}]}}}}"
+      - kubectl patch deployment ${KUBERNETES_DEPLOYMENT} -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"${KUBERNETES_DEPLOYMENT}\",\"image\":\"${IMAGE}\"}]}}}}"
   prod:
     branch: stable
     commands:
