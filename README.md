@@ -14,9 +14,26 @@ kubectl create --namespace production -f etc-kube/deployment.json
 kubectl create --namespace production -f etc-kube/service.json
 kubectl create --namespace production -f etc-kube/ingress-ssl.yaml
 kubectl create --namespace production -f etc-kube/ingress.yaml
-kubectl --namespace production create -f etc-kube/serviceAccount.yaml
 ```
 
+
+Setup testing:
+
+```
+kubectl create --namespace production -f etc-kube/secrets-testing.yaml
+kubectl create --namespace production -f etc-kube/deployment-testing.json
+kubectl create --namespace production -f etc-kube/service-testing.json
+kubectl create --namespace production -f etc-kube/ingress-testing.yaml
+```
+
+
+----
+
+
+Create service account: (not used yet)
+```
+kubectl --namespace production create -f etc-kube/serviceAccount.yaml
+```
 
 
 ```

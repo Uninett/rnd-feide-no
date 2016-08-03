@@ -9,6 +9,7 @@ machine:
     IMAGE: ${IMAGE_BASE}:build-${CIRCLE_BUILD_NUM}
     KUBERNETES_SERVER: https://104.155.105.25
     KUBERNETES_DEPLOYMENT: feidernd
+    KUBERNETES_DEPLOYMENT_TESTING: feidernd-testing
   services:
     - docker
 
@@ -45,7 +46,15 @@ dependencies:
     # - docker tag ${IMAGE_BASE}:$CIRCLE_SHA1 ${IMAGE_BASE}:testing-${CIRCLE_BUILD_NUM}
     - docker push ${IMAGE_BASE}
     - export DBHOST=`kubectl --namespace production get secrets feidernd  -o 'go-template={{index .data "dbhost"}}' | base64 -D`
-    - export DBHOST=`kubectl --namespace production get secrets feidernd  -o 'go-template={{index .data "dbhost"}}' | base64 -D`
+    - export DBNAME=`kubectl --namespace production get secrets feidernd  -o 'go-template={{index .data "dbname"}}' | base64 -D`
+    - export DBUSER=`kubectl --namespace production get secrets feidernd  -o 'go-template={{index .data "dbuser"}}' | base64 -D`
+    - export DBPASSWORD=`kubectl --namespace production get secrets feidernd  -o 'go-template={{index .data "dbpassword"}}' | base64 -D`
+    - export TESTING_DBHOST=`kubectl --namespace production get secrets feidernd-testing  -o 'go-template={{index .data "dbhost"}}' | base64 -D`
+    - export TESTING_DBNAME=`kubectl --namespace production get secrets feidernd-testing  -o 'go-template={{index .data "dbname"}}' | base64 -D`
+    - export TESTING_DBUSER=`kubectl --namespace production get secrets feidernd-testing  -o 'go-template={{index .data "dbuser"}}' | base64 -D`
+    - export TESTING_DBPASSWORD=`kubectl --namespace production get secrets feidernd-testing  -o 'go-template={{index .data "dbpassword"}}' | base64 -D`
+
+
 
 # Automatically configure kubectl
     # - sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file ${HOME}/account-auth.json
@@ -70,7 +79,9 @@ deployment:
       - echo "Deployment [MASTER / Preprod] ${IMAGE}"
       - echo "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"${KUBERNETES_DEPLOYMENT}\",\"image\":\"${IMAGE}\"}]}}}}"
       - kubectl patch deployment ${KUBERNETES_DEPLOYMENT} -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"${KUBERNETES_DEPLOYMENT}\",\"image\":\"${IMAGE}\"}]}}}}"
+      - mysqldump -u ${DBUSER} --password="${DBPASSWORD}" -h ${DBHOST} --all-databases | mysql -u ${TESTING_DBUSER} --password="${TESTING_DBPASSWORD}" -h ${TESTING_DBHOST} ${TESTING_DBNAME}
   prod:
     branch: stable
     commands:
       - echo "Deployment [STABLE / Production] ${IMAGE}"
+      - kubectl patch deployment ${KUBERNETES_DEPLOYMENT_TESTING} -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"${KUBERNETES_DEPLOYMENT}\",\"image\":\"${IMAGE}\"}]}}}}"
