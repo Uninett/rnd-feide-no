@@ -14,7 +14,9 @@ machine:
 
 dependencies:
   pre:
-    - sudo apt-get update; sudo apt-get install mysql-client
+    - mysql --version
+    - mysqldump --version
+    # - sudo apt-get update; sudo apt-get install mysql-client
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update kubectl
     # This is not really used right now..
@@ -68,8 +70,6 @@ deployment:
       - echo "Deployment [MASTER / Preprod] ${IMAGE}"
       - echo "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"${KUBERNETES_DEPLOYMENT}\",\"image\":\"${IMAGE}\"}]}}}}"
       - kubectl patch deployment ${KUBERNETES_DEPLOYMENT} -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"${KUBERNETES_DEPLOYMENT}\",\"image\":\"${IMAGE}\"}]}}}}"
-      - mysql --version
-      - mysqlump --version
   prod:
     branch: stable
     commands:
