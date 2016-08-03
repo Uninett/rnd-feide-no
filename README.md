@@ -39,6 +39,17 @@ gcloud compute firewall-rules create feidernd-allow-130-211-0-0-22 --source-rang
 ```
 
 
+## Perform deployment configuration updates
+
+Comit changes to test in master branch.
+
+When verified:
+
+```
+git checkout stable && git merge master
+git push
+```
+
 ----
 
 

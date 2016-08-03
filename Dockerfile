@@ -1,7 +1,7 @@
 FROM wordpress:4.5.3-apache
 
 
-RUN apt-get update && apt-get install -yqq unzip git 
+RUN apt-get update && apt-get install -yqq unzip git
 
 RUN curl -o /tmp/composer.phar http://getcomposer.org/composer.phar \
   && mv /tmp/composer.phar /usr/local/bin/composer
