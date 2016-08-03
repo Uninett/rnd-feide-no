@@ -14,6 +14,8 @@ dependencies:
   pre:
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update kubectl
+
+    # This is not really used right now..
     - echo $GKE_SERVICE_ACCOUNT | base64 --decode -i > ${HOME}/account-auth.json
     - sudo /opt/google-cloud-sdk/bin/gcloud config set project $PROJECT_NAME
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet config set container/cluster $CLUSTER_NAME
@@ -21,7 +23,6 @@ dependencies:
     - sudo /opt/google-cloud-sdk/bin/gcloud config set compute/zone ${CLOUDSDK_COMPUTE_ZONE}
 
     # - sudo chown -R ubuntu:ubuntu ${HOME}/.kube
-    # - kubectl config set-cluster e2e --server=https://104.155.105.25
     - kubectl config set-credentials circleci --token=${GKE_SERVICE_TOKEN}
     - kubectl config set-credentials admin --username=admin --password=${GKE_ADMIN_PASSWD}
     - kubectl config set-cluster cluster-1 --server=${KUBERNETES_SERVER} --insecure-skip-tls-verify=true
@@ -30,7 +31,6 @@ dependencies:
     # - kubectl config view
     - kubectl get pods
     - kubectl get serviceaccounts
-    - docker build -t ${IMAGE_BASE}:$CIRCLE_SHA1 .
     # Using a separate tag command until Docker 1.10 is available on CircleCI, then we can use two tags in the build command above
     # - gcloud docker push
 
@@ -51,7 +51,8 @@ deployment:
     commands:
       - echo "Deployment [MASTER / Preprod] ${IMAGE_BASE}:testing-$CIRCLE_BUILD_NUM"
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker tag ${IMAGE_BASE}:$CIRCLE_SHA1 ${IMAGE_BASE}:testing-${CIRCLE_BUILD_NUM}
+      - docker build -t ${IMAGE_BASE}:testing-${CIRCLE_BUILD_NUM} .
+      # - docker tag ${IMAGE_BASE}:$CIRCLE_SHA1 ${IMAGE_BASE}:testing-${CIRCLE_BUILD_NUM}
       - docker push ${IMAGE_BASE}
       # - gcloud docker push eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}
   prod:
@@ -59,6 +60,11 @@ deployment:
     commands:
       - echo "Deployment [STABLE / Production] ${IMAGE_BASE}:stable-$CIRCLE_BUILD_NUM"
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker tag ${IMAGE_BASE}:$CIRCLE_SHA1 ${IMAGE_BASE}:stable-${CIRCLE_BUILD_NUM}
+      - docker build -t ${IMAGE_BASE}:stable-${CIRCLE_BUILD_NUM} .
+      # - docker tag ${IMAGE_BASE}:$CIRCLE_SHA1 ${IMAGE_BASE}:stable-${CIRCLE_BUILD_NUM}
       - docker push ${IMAGE_BASE}
       # - gcloud docker push eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}
+
+test:
+  override:
+    - true
