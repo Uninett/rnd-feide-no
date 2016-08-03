@@ -33,6 +33,9 @@ dependencies:
     - kubectl get serviceaccounts
     # Using a separate tag command until Docker 1.10 is available on CircleCI, then we can use two tags in the build command above
     # - gcloud docker push
+    - echo "ENV CBUILDNUM ${CIRCLE_BUILD_NUM}" > ./Dockerfile
+    - echo "ENV CBRANCH ${CIRCLE_BRANCH}" > ./Dockerfile
+    - cat Dockerfile
     - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
     - docker build -t ${IMAGE} .
     # - docker tag ${IMAGE_BASE}:$CIRCLE_SHA1 ${IMAGE_BASE}:testing-${CIRCLE_BUILD_NUM}
@@ -51,13 +54,15 @@ dependencies:
 test:
   post:
     - docker run -d -p 80:80 ${IMAGE}; sleep 10
-    - curl --retry 10 --retry-delay 5 -v http://localhost:80
+    - curl --retry 10 --retry-delay 5 -v http://rnd.feide.no:80
+    # - curl --retry 10 --retry-delay 5 -v http://localhost:80
 
 deployment:
   preprod:
     branch: master
     commands:
       - echo "Deployment [MASTER / Preprod] ${IMAGE}"
+      - kubectl patch deployment rnd-feide-no -p '{"spec":{"template":{"spec":{"containers":[{"name":"docker-hello-google","image":"us.gcr.io/circle-ctl-test/hello:'"$CIRCLE_SHA1"'"}]}}}}'
   prod:
     branch: stable
     commands:
