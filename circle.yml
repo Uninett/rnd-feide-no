@@ -52,7 +52,7 @@ deployment:
       - echo "Deployment [MASTER / Preprod] ${IMAGE_BASE}:testing-$CIRCLE_BUILD_NUM"
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - docker tag ${IMAGE_BASE}:$CIRCLE_SHA1 ${IMAGE_BASE}:testing-${CIRCLE_BUILD_NUM}
-      - docker push
+      - docker push ${IMAGE_BASE}
       # - gcloud docker push eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}
   prod:
     branch: stable
@@ -60,5 +60,5 @@ deployment:
       - echo "Deployment [STABLE / Production] ${IMAGE_BASE}:stable-$CIRCLE_BUILD_NUM"
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - docker tag ${IMAGE_BASE}:$CIRCLE_SHA1 ${IMAGE_BASE}:stable-${CIRCLE_BUILD_NUM}
-      - docker push
+      - docker push ${IMAGE_BASE}
       # - gcloud docker push eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}
