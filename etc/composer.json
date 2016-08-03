@@ -29,7 +29,9 @@
 		"wpackagist-plugin/wptouch": "~4.1.4",
 		"wpackagist-plugin/wp-native-php-sessions": "~0.5",
 		"wpackagist-plugin/wp-persistent-login": "~1.0.2",
-		"wpackagist-plugin/wp-stateless": "~1.9.0"
+		"wpackagist-plugin/wp-stateless": "~1.9.0",
+		"wpackagist-plugin/w3-total-cache": "~0.9.4.1",
+		"wpackagist-plugin/syntaxhighlighter": "~3.2.1"
 	},
 	"extra": {
 		"wordpress-install-dir": "wordpress",
