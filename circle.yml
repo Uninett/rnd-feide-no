@@ -5,6 +5,8 @@ machine:
     CLOUDSDK_COMPUTE_ZONE: europe-west1-c
     DEBIAN_FRONTEND: noninteractive
     CONTAINER_NAME: rnd-feide-no
+    IMAGE_BASE: uninettno/rnd-feide-no
+    KUBERNETES_SERVER: https://104.155.105.25
   services:
     - docker
 
@@ -22,15 +24,15 @@ dependencies:
     # - kubectl config set-cluster e2e --server=https://104.155.105.25
     - kubectl config set-credentials circleci --token=${GKE_SERVICE_TOKEN}
     - kubectl config set-credentials admin --username=admin --password=${GKE_ADMIN_PASSWD}
-    - kubectl config set-cluster cluster-1 --server=https://104.155.105.25 --insecure-skip-tls-verify=true
+    - kubectl config set-cluster cluster-1 --server=${KUBERNETES_SERVER} --insecure-skip-tls-verify=true
     - kubectl config set-context gce --user=admin --cluster=cluster-1 --namespace=production
     - kubectl config use-context gce
     # - kubectl config view
     - kubectl get pods
     - kubectl get serviceaccounts
-    - docker build -t eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}:$CIRCLE_SHA1 .
+    - docker build -t ${IMAGE_BASE}:$CIRCLE_SHA1 .
     # Using a separate tag command until Docker 1.10 is available on CircleCI, then we can use two tags in the build command above
-    - gcloud docker push
+    # - gcloud docker push
 
 
 # Automatically configure kubectl
@@ -47,12 +49,16 @@ deployment:
   preprod:
     branch: master
     commands:
-      - echo "Yay project eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}:testing-$CIRCLE_BUILD_NUM"
-      - docker tag eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}:$CIRCLE_SHA1 eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}:testing-${CIRCLE_BUILD_NUM}
-      - gcloud docker push eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}
+      - echo "Deployment [MASTER / Preprod] ${IMAGE_BASE}:testing-$CIRCLE_BUILD_NUM"
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker tag ${IMAGE_BASE}:$CIRCLE_SHA1 ${IMAGE_BASE}:testing-${CIRCLE_BUILD_NUM}
+      - docker push
+      # - gcloud docker push eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}
   prod:
     branch: stable
     commands:
-      - echo "Yay project eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}:stable-$CIRCLE_BUILD_NUM"
-      - docker tag eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}:$CIRCLE_SHA1 eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}:stable-${CIRCLE_BUILD_NUM}
-      - gcloud docker push eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}
+      - echo "Deployment [STABLE / Production] ${IMAGE_BASE}:stable-$CIRCLE_BUILD_NUM"
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+      - docker tag ${IMAGE_BASE}:$CIRCLE_SHA1 ${IMAGE_BASE}:stable-${CIRCLE_BUILD_NUM}
+      - docker push
+      # - gcloud docker push eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}
