@@ -6,6 +6,7 @@ machine:
     DEBIAN_FRONTEND: noninteractive
     CONTAINER_NAME: rnd-feide-no
     IMAGE_BASE: uninettno/rnd-feide-no
+    IMAGE: ${IMAGE_BASE}:build-${CIRCLE_BUILD_NUM}
     KUBERNETES_SERVER: https://104.155.105.25
   services:
     - docker
@@ -14,14 +15,12 @@ dependencies:
   pre:
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update kubectl
-
     # This is not really used right now..
     - echo $GKE_SERVICE_ACCOUNT | base64 --decode -i > ${HOME}/account-auth.json
     - sudo /opt/google-cloud-sdk/bin/gcloud config set project $PROJECT_NAME
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet config set container/cluster $CLUSTER_NAME
     # Reading the zone from the env var is not working so we set it here
     - sudo /opt/google-cloud-sdk/bin/gcloud config set compute/zone ${CLOUDSDK_COMPUTE_ZONE}
-
     # - sudo chown -R ubuntu:ubuntu ${HOME}/.kube
     - kubectl config set-credentials circleci --token=${GKE_SERVICE_TOKEN}
     - kubectl config set-credentials admin --username=admin --password=${GKE_ADMIN_PASSWD}
@@ -33,7 +32,10 @@ dependencies:
     - kubectl get serviceaccounts
     # Using a separate tag command until Docker 1.10 is available on CircleCI, then we can use two tags in the build command above
     # - gcloud docker push
-
+    - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+    - docker build -t ${IMAGE} .
+    # - docker tag ${IMAGE_BASE}:$CIRCLE_SHA1 ${IMAGE_BASE}:testing-${CIRCLE_BUILD_NUM}
+    - docker push ${IMAGE_BASE}
 
 # Automatically configure kubectl
     # - sudo /opt/google-cloud-sdk/bin/gcloud auth activate-service-account --key-file ${HOME}/account-auth.json
@@ -45,26 +47,17 @@ dependencies:
 #     - docker run -d -p 3000:3000 -e "SECRET_KEY_BASE=abcd1234" eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}:$CIRCLE_SHA1; sleep 10
 #     - curl --retry 10 --retry-delay 5 -v http://localhost:3000
 
+test:
+  post:
+    - docker run -d -p 80:80 ${IMAGE}; sleep 10
+    - curl --retry 10 --retry-delay 5 -v http://localhost:80
+
 deployment:
   preprod:
     branch: master
     commands:
-      - echo "Deployment [MASTER / Preprod] ${IMAGE_BASE}:testing-$CIRCLE_BUILD_NUM"
-      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker build -t ${IMAGE_BASE}:testing-${CIRCLE_BUILD_NUM} .
-      # - docker tag ${IMAGE_BASE}:$CIRCLE_SHA1 ${IMAGE_BASE}:testing-${CIRCLE_BUILD_NUM}
-      - docker push ${IMAGE_BASE}
-      # - gcloud docker push eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}
+      - echo "Deployment [MASTER / Preprod] ${IMAGE}"
   prod:
     branch: stable
     commands:
-      - echo "Deployment [STABLE / Production] ${IMAGE_BASE}:stable-$CIRCLE_BUILD_NUM"
-      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-      - docker build -t ${IMAGE_BASE}:stable-${CIRCLE_BUILD_NUM} .
-      # - docker tag ${IMAGE_BASE}:$CIRCLE_SHA1 ${IMAGE_BASE}:stable-${CIRCLE_BUILD_NUM}
-      - docker push ${IMAGE_BASE}
-      # - gcloud docker push eu.gcr.io/${PROJECT_NAME}/${CONTAINER_NAME}
-
-test:
-  override:
-    - true
+      - echo "Deployment [STABLE / Production] ${IMAGE}"
