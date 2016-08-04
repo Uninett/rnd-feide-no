@@ -51,10 +51,10 @@ RUN cd /tmp && chmod +x wp-cli.phar \
 
 #### --- Configure entrypoint ---
 COPY bin/entrypoint.sh /entrypoint.sh
-RUN sed -i '$ d' /entrypoint.sh
+# RUN sed -i '$ d' /entrypoint.sh
 # RUN echo 'wp plugin activate dataporten-oauth --allow-root' >> /entrypoint.sh
 # RUN echo 'cat .htaccess >> /.htaccess_extra && cat /.htaccess_extra > .htaccess' >> /entrypoint.sh
-RUN echo 'exec "$@"' >> /entrypoint.sh
+# RUN echo 'exec "$@"' >> /entrypoint.sh
 
 
 RUN git clone https://github.com/Otto42/simple-twitter-connect.git /app/wordpress/wp-content/plugins/simple-twitter-connect
