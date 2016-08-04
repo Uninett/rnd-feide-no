@@ -89,6 +89,12 @@ COPY etc/apache-vhost.conf /etc/apache2/sites-enabled/000-default.conf
 # RUN cat /etc/apache2/sites-enabled/000-default.conf
 
 
+RUN curl -o /app/wordpress/wp-content/themes/feidern/fonts/colfaxLight.woff http://mal.uninett.no/uninett-theme/fonts/colfaxLight.woff
+RUN curl -o /app/wordpress/wp-content/themes/feidern/fonts/colfaxMedium.woff http://mal.uninett.no/uninett-theme/fonts/colfaxMedium.woff
+RUN curl -o /app/wordpress/wp-content/themes/feidern/fonts/colfaxRegular.woff http://mal.uninett.no/uninett-theme/fonts/colfaxRegular.woff
+RUN curl -o /app/wordpress/wp-content/themes/feidern/fonts/colfaxThin.woff http://mal.uninett.no/uninett-theme/fonts/colfaxThin.woff
+RUN curl -o /app/wordpress/wp-content/themes/feidern/fonts/colfaxRegularItalic.woff http://mal.uninett.no/uninett-theme/fonts/colfaxRegularItalic.woff
+
 # grr, ENTRYPOINT resets CMD now
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["apache2-foreground"]
