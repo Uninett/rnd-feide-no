@@ -27,7 +27,7 @@ RUN git clone https://github.com/Otto42/simple-twitter-connect.git /usr/share/wo
 
 RUN rm -rf /tmp/stc.zip && rm -rf /tmp/stc && rm -rf /tmp/markdown.zip
 
-ADD etc/composer.json /usr/src/composer.json
+COPY etc/composer.json /usr/src/composer.json
 
 RUN chmod a+x /usr/local/bin/composer
 RUN cd /usr/src/ && /usr/local/bin/composer install
