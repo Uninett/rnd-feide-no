@@ -39,6 +39,6 @@ RUN rm -rf /tmp/twentyeleven.zip && rm -rf /tmp/dataporten-oauth.zip
 RUN echo "ok" > /usr/src/wordpress/ok.html
 
 COPY feidernd /usr/src/wordpress/wp-content/themes/feidernd
-COPY etc/env_lister.php /usr/src/wordpress/version/index.php
+COPY www/version.php /usr/src/wordpress/version/index.php
 
 VOLUME volume/ /var/www/
