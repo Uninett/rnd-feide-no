@@ -46,9 +46,6 @@ RUN cd /tmp && chmod +x wp-cli.phar \
 
 
 
-
-
-
 #### --- Configure entrypoint ---
 COPY bin/entrypoint.sh /entrypoint.sh
 # RUN sed -i '$ d' /entrypoint.sh
