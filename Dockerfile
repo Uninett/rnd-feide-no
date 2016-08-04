@@ -39,6 +39,7 @@ RUN unzip /tmp/twentyeleven.zip -d /usr/src/wordpress/wp-content/themes/
 RUN rm -rf /tmp/twentyeleven.zip
 
 COPY www/ /usr/src/wordpress/
+RUN chown -R www-data:www-data /usr/src/wordpress/
 
 RUN ls -la /usr/src/wordpress/
 # RUN cat /usr/src/wordpress/wp-settings.php
