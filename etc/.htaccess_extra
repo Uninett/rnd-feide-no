@@ -1,7 +1,7 @@
 <IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteCond %{HTTP_USER_AGENT}  ^GoogleHC\/1\.0(.*)$
-RewriteRule ^(.*)$ https://rnd.feide.no/ok.html [L,R=200]
-RewriteCond %{HTTP:X-Forwarded-Proto} !https
-RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+  RewriteEngine On
+  RewriteCond %{HTTP_USER_AGENT}  ^GoogleHC\/1\.0(.*)$
+  RewriteRule ^(.*)$ https://rnd.feide.no/ok.html [L,R=200]
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 </IfModule>

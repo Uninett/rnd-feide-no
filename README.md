@@ -50,6 +50,16 @@ git checkout stable && git merge master
 git push
 ```
 
+
+
+## Local development and builds
+
+```
+docker build -t uninettno/feidernd:testing .
+```
+
+
+
 ----
 
 
