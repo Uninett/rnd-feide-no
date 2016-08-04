@@ -68,8 +68,8 @@ define( 'NONCE_SALT',       getenv('NONCE_SALT'));
 
 
 define( 'WP_STATELESS_MEDIA_BUCKET', 			getenv('STATELESS_MEDIA_BUCKET'));
-define( 'WP_STATELESS_MEDIA_MODE', 				getenv('STATELESS_MEDIA_MODE'));
-define( 'WP_STATELESS_MEDIA_KEY_FILE_PATH', 	getenv('STATELESS_MEDIA_KEY_FILE_PATH'));
+define( 'WP_STATELESS_MEDIA_MODE', 				  'cdn');
+define( 'WP_STATELESS_MEDIA_KEY_FILE_PATH', '/etc/secrets/gcserviceaccount.json');
 define( 'WP_STATELESS_MEDIA_SERVICE_ACCOUNT', 	getenv('STATELESS_MEDIA_SERVICE_ACCOUNT'));
 
 // define('AWS_ACCESS_KEY_ID',     $wpSecrets['AWS_S3_KEY']);
@@ -110,16 +110,11 @@ define ('WPLANG', 'nb_NO');
 define('WP_DEBUG', false);
 
 
-// echo "foo1<pre>";
 
+$url = (getenv('TLS') === 'true' ? 'https' : 'http') . '://' . getenv('HOST');
+define("WP_SITEURL", $url.'/');
+define('WP_HOME', $url);
 
-// // // /** This should point to the app directory */
-define("WP_SITEURL", "http://" . $_SERVER["HTTP_HOST"].'/');
-
-// // // echo "\nWP_SITEURL " . WP_SITEURL;
-
-// // // /** This is the URL your visitors will see */
-define('WP_HOME', "http://" . $_SERVER["HTTP_HOST"]);
 
 //  echo "\nWP_HOME " . WP_HOME ;
 // * Point both directory and URLs to content/ instead of the default wp-content/ *

@@ -30,7 +30,7 @@
   						"name": "WORDPRESS_DB_HOST",
   						"valueFrom": {
                 "secretKeyRef": {
-                  "name": "feidernd",
+                  "name": "feidernd-testing",
                   "key": "dbhost"
                 }
               }
@@ -39,7 +39,7 @@
   						"name": "WORDPRESS_DB_USER",
               "valueFrom": {
                 "secretKeyRef": {
-                  "name": "feidernd",
+                  "name": "feidernd-testing",
                   "key": "dbuser"
                 }
               }
@@ -48,7 +48,7 @@
   						"name": "WORDPRESS_DB_PASSWORD",
               "valueFrom": {
                 "secretKeyRef": {
-                  "name": "feidernd",
+                  "name": "feidernd-testing",
                   "key": "dbpassword"
                 }
               }
@@ -57,7 +57,7 @@
   						"name": "WORDPRESS_DB_NAME",
               "valueFrom": {
                 "secretKeyRef": {
-                  "name": "feidernd",
+                  "name": "feidernd-testing",
                   "key": "dbname"
                 }
               }
@@ -68,13 +68,13 @@
   					},
             {
   						"name": "TLS",
-  						"value": "false"
+  						"value": "true"
   					},
             {
   						"name": "DATAPORTEN_CLIENTID",
               "valueFrom": {
                 "secretKeyRef": {
-                  "name": "feidernd",
+                  "name": "feidernd-testing",
                   "key": "dataporten-clientid"
                 }
               }
@@ -83,7 +83,7 @@
   						"name": "DATAPORTEN_CLIENTSECRET",
               "valueFrom": {
                 "secretKeyRef": {
-                  "name": "feidernd",
+                  "name": "feidernd-testing",
                   "key": "dataporten-clientsecret"
                 }
               }
@@ -92,7 +92,7 @@
   						"name": "DATAPORTEN_SCOPES",
               "valueFrom": {
                 "secretKeyRef": {
-                  "name": "feidernd",
+                  "name": "feidernd-testing",
                   "key": "dataporten-scopes"
                 }
               }
@@ -101,7 +101,7 @@
   						"name": "DATAPORTEN_ROLESETS",
               "valueFrom": {
                 "secretKeyRef": {
-                  "name": "feidernd",
+                  "name": "feidernd-testing",
                   "key": "dataporten-rolesets"
                 }
               }
@@ -110,7 +110,7 @@
   						"name": "DATAPORTEN_DEFAULT_ROLE_ENABLED",
               "valueFrom": {
                 "secretKeyRef": {
-                  "name": "feidernd",
+                  "name": "feidernd-testing",
                   "key": "dataporten-default-role-enabled"
                 }
               }
@@ -120,7 +120,7 @@
   						"name": "AUTH_KEY",
               "valueFrom": {
                 "secretKeyRef": {
-                  "name": "feidernd",
+                  "name": "feidernd-testing",
                   "key": "auth-key"
                 }
               }
@@ -129,7 +129,7 @@
   						"name": "SECURE_AUTH_KEY",
               "valueFrom": {
                 "secretKeyRef": {
-                  "name": "feidernd",
+                  "name": "feidernd-testing",
                   "key": "secure-auth-key"
                 }
               }
@@ -138,7 +138,7 @@
   						"name": "LOGGED_IN_KEY",
               "valueFrom": {
                 "secretKeyRef": {
-                  "name": "feidernd",
+                  "name": "feidernd-testing",
                   "key": "logged-in-key"
                 }
               }
@@ -147,7 +147,7 @@
   						"name": "NONCE_KEY",
               "valueFrom": {
                 "secretKeyRef": {
-                  "name": "feidernd",
+                  "name": "feidernd-testing",
                   "key": "nonce-key"
                 }
               }
@@ -156,7 +156,7 @@
   						"name": "AUTH_SALT",
               "valueFrom": {
                 "secretKeyRef": {
-                  "name": "feidernd",
+                  "name": "feidernd-testing",
                   "key": "auth-salt"
                 }
               }
@@ -165,7 +165,7 @@
   						"name": "SECURE_AUTH_SALT",
               "valueFrom": {
                 "secretKeyRef": {
-                  "name": "feidernd",
+                  "name": "feidernd-testing",
                   "key": "secure-auth-salt"
                 }
               }
@@ -174,7 +174,7 @@
   						"name": "LOGGED_IN_SALT",
               "valueFrom": {
                 "secretKeyRef": {
-                  "name": "feidernd",
+                  "name": "feidernd-testing",
                   "key": "logged-in-salt"
                 }
               }
@@ -183,11 +183,29 @@
   						"name": "NONCE_SALT",
               "valueFrom": {
                 "secretKeyRef": {
-                  "name": "feidernd",
+                  "name": "feidernd-testing",
                   "key": "nonce-salt"
                 }
               }
-  					}
+  					},
+						{
+							"name": "STATELESS_MEDIA_BUCKET",
+							"valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd-testing",
+                  "key": "stateless-media-bucket"
+                }
+              }
+						},
+						{
+							"name": "STATELESS_MEDIA_SERVICE_ACCOUNT",
+							"valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd-testing",
+                  "key": "stateless-media-account"
+                }
+              }
+						}
           ],
 					"imagePullPolicy": "Always",
 					"ports": [{
