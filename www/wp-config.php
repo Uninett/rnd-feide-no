@@ -116,6 +116,29 @@ define("WP_SITEURL", $url.'/');
 define('WP_HOME', $url);
 
 
+/* Special redirect and handlibg based upon headers.... */
+$headersArr = apache_request_headers();
+$headers = [];
+foreach ($headersArr as $header => $value) {
+    $headers[strtolower($header)] = $value;
+}
+
+if (isset($headers["user-agent"]) && $headers["user-agent"] === 'GoogleHC/1.0') {
+  echo 'OK';
+  exit;
+}
+if (getenv('TLS') === 'true' && isset($headers["x-forwarded-proto"]) && $headers["x-forwarded-proto"] === 'http') {
+  $redirect = 'https://' . getenv('HOST') . $_SERVER['REQUEST_URI'];
+  header('HTTP/1.1 301 Moved Permanently');
+  header('Location: ' . $redirect);
+  exit();
+}
+
+
+/* ------ --- --- -- -- --- -- .... */
+
+
+
 //  echo "\nWP_HOME " . WP_HOME ;
 // * Point both directory and URLs to content/ instead of the default wp-content/ *
 // if ( ! defined( 'WP_CONTENT_DIR' ) ) {
