@@ -15,7 +15,7 @@ RUN curl -o /tmp/wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-
 RUN cd /tmp && chmod +x wp-cli.phar \
   && mv wp-cli.phar /usr/local/bin/wp
 
-COPY etc/.htaccess_extra .htaccess_extra
+# COPY etc/.htaccess_extra .htaccess_extra
 # RUN cat .htaccess_extra >> .htaccess && rm .htaccess_extra && cat .htaccess
 RUN cat /entrypoint.sh
 
