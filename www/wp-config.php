@@ -67,6 +67,10 @@ define( 'LOGGED_IN_SALT',   getenv('LOGGED_IN_SALT'));
 define( 'NONCE_SALT',       getenv('NONCE_SALT'));
 
 
+define( 'WP_STATELESS_MEDIA_BUCKET', 			getenv('STATELESS_MEDIA_BUCKET'));
+define( 'WP_STATELESS_MEDIA_MODE', 				getenv('STATELESS_MEDIA_MODE'));
+define( 'WP_STATELESS_MEDIA_KEY_FILE_PATH', 	getenv('STATELESS_MEDIA_KEY_FILE_PATH'));
+define( 'WP_STATELESS_MEDIA_SERVICE_ACCOUNT', 	getenv('STATELESS_MEDIA_SERVICE_ACCOUNT'));
 
 // define('AWS_ACCESS_KEY_ID',     $wpSecrets['AWS_S3_KEY']);
 // define('AWS_SECRET_ACCESS_KEY', $wpSecrets['AWS_S3_SECRET']);

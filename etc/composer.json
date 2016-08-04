@@ -11,9 +11,9 @@
 		"url": "https://wpackagist.org"
 	}],
 	"require": {
+		"composer/installers": "~1.0",
 		"johnpbloch/wordpress": "~4.5.2",
 		"johnpbloch/wordpress-core-installer": "~0.2",
-		"composer/installers": "~1.0",
 		"wpackagist-plugin/cloudinary-image-management-and-manipulation-in-the-cloud-cdn": "~1.1.4",
 		"wpackagist-plugin/convert-post-types": "~1.4",
 		"wpackagist-plugin/dataporten-oauth": "~1.3",
@@ -38,7 +38,7 @@
 	"extra": {
 		"wordpress-install-dir": "wordpress",
 		"installer-paths": {
-			"wordpress/wp-content/plugins/{$name}/": ["type:wordpress-plugin"]
+			"plugins/{$name}": ["type:wordpress-plugin"]
 		}
 	}
 }

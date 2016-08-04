@@ -27,6 +27,7 @@ WORKDIR /app
 RUN curl -o /tmp/composer.phar http://getcomposer.org/composer.phar \
   && mv /tmp/composer.phar /usr/local/bin/composer && chmod a+x /usr/local/bin/composer
 RUN composer install
+RUN cp -rT plugins/ wordpress/wp-content/plugins/
 
 RUN curl -o /tmp/markdown.zip https://littoral.michelf.ca/code/php-markdown/php-markdown-extra-1.2.8.zip \
   && unzip /tmp/markdown.zip -d  /app/wordpress/wp-content/plugins \
