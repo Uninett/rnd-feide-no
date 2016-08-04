@@ -56,8 +56,6 @@ COPY bin/entrypoint.sh /entrypoint.sh
 
 RUN git clone https://github.com/Otto42/simple-twitter-connect.git /app/wordpress/wp-content/plugins/simple-twitter-connect
 
-
-
 COPY www/ /app/wordpress
 
 RUN mkdir /app/wordpress/wp-content/uploads
@@ -89,11 +87,11 @@ COPY etc/apache-vhost.conf /etc/apache2/sites-enabled/000-default.conf
 # RUN cat /etc/apache2/sites-enabled/000-default.conf
 
 
-RUN curl -o /app/wordpress/wp-content/themes/feidern/fonts/colfaxLight.woff http://mal.uninett.no/uninett-theme/fonts/colfaxLight.woff
-RUN curl -o /app/wordpress/wp-content/themes/feidern/fonts/colfaxMedium.woff http://mal.uninett.no/uninett-theme/fonts/colfaxMedium.woff
-RUN curl -o /app/wordpress/wp-content/themes/feidern/fonts/colfaxRegular.woff http://mal.uninett.no/uninett-theme/fonts/colfaxRegular.woff
-RUN curl -o /app/wordpress/wp-content/themes/feidern/fonts/colfaxThin.woff http://mal.uninett.no/uninett-theme/fonts/colfaxThin.woff
-RUN curl -o /app/wordpress/wp-content/themes/feidern/fonts/colfaxRegularItalic.woff http://mal.uninett.no/uninett-theme/fonts/colfaxRegularItalic.woff
+RUN curl -o /app/wordpress/wp-content/themes/feidernd/fonts/colfaxLight.woff http://mal.uninett.no/uninett-theme/fonts/colfaxLight.woff
+RUN curl -o /app/wordpress/wp-content/themes/feidernd/fonts/colfaxMedium.woff http://mal.uninett.no/uninett-theme/fonts/colfaxMedium.woff
+RUN curl -o /app/wordpress/wp-content/themes/feidernd/fonts/colfaxRegular.woff http://mal.uninett.no/uninett-theme/fonts/colfaxRegular.woff
+RUN curl -o /app/wordpress/wp-content/themes/feidernd/fonts/colfaxThin.woff http://mal.uninett.no/uninett-theme/fonts/colfaxThin.woff
+RUN curl -o /app/wordpress/wp-content/themes/feidernd/fonts/colfaxRegularItalic.woff http://mal.uninett.no/uninett-theme/fonts/colfaxRegularItalic.woff
 
 # grr, ENTRYPOINT resets CMD now
 ENTRYPOINT ["/entrypoint.sh"]
