@@ -3,3 +3,4 @@ feidernd/fonts/
 etc-kube/ingress-ssl.yaml
 etc-kube/secrets-testing.yaml
 etc-kube/secrets.yaml
+etc/ENV

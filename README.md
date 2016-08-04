@@ -4,6 +4,9 @@ A blog about identity, technology etc.
 
 This repository holds the `Dockerfile` building the blog environment, as well as kubernetes config files, and build and deployment scripts.
 
+
+
+
 ## Initial setup
 
 Setting up rnd.feide.on on Google Container Engine.
@@ -25,6 +28,9 @@ kubectl create --namespace production -f etc-kube/deployment-testing.json
 kubectl create --namespace production -f etc-kube/service-testing.json
 kubectl create --namespace production -f etc-kube/ingress-testing.yaml
 ```
+
+
+
 
 ### Setting up firewall on GKE_SERVICE_TOKEN
 
@@ -51,14 +57,21 @@ git push
 ```
 
 
-
 ## Local development and builds
 
 ```
 docker build -t uninettno/feidernd:testing .
+docker run -p 8080:80 --env-file etc/ENV uninettno/feidernd:testing
 ```
 
+## Update secrets
 
+```
+kubectl --namespace production replace secret feidernd-testing -f etc-kube/secrets-testing.yaml
+kubectl --namespace production replace secret feidernd -f etc-kube/secrets.yaml
+kubectl --namespace production replace deployment feidernd-testing -f etc-kube/deployment-testing.json
+kubectl --namespace production replace deployment feidernd -f etc-kube/deployment.json
+```
 
 ----
 
@@ -67,7 +80,6 @@ Create service account: (not used yet)
 ```
 kubectl --namespace production create -f etc-kube/serviceAccount.yaml
 ```
-
 
 ```
 kubectl --namespace production get pods

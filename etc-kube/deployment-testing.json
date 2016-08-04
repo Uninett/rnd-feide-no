@@ -114,6 +114,79 @@
                   "key": "dataporten-default-role-enabled"
                 }
               }
+  					},
+
+						{
+  						"name": "AUTH_KEY",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd",
+                  "key": "auth-key"
+                }
+              }
+  					},
+						{
+  						"name": "SECURE_AUTH_KEY",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd",
+                  "key": "secure-auth-key"
+                }
+              }
+  					},
+						{
+  						"name": "LOGGED_IN_KEY",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd",
+                  "key": "logged-in-key"
+                }
+              }
+  					},
+						{
+  						"name": "NONCE_KEY",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd",
+                  "key": "nonce-key"
+                }
+              }
+  					},
+						{
+  						"name": "AUTH_SALT",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd",
+                  "key": "auth-salt"
+                }
+              }
+  					},
+						{
+  						"name": "SECURE_AUTH_SALT",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd",
+                  "key": "secure-auth-salt"
+                }
+              }
+  					},
+						{
+  						"name": "LOGGED_IN_SALT",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd",
+                  "key": "logged-in-salt"
+                }
+              }
+  					},
+						{
+  						"name": "NONCE_SALT",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd",
+                  "key": "nonce-salt"
+                }
+              }
   					}
           ],
 					"imagePullPolicy": "Always",
