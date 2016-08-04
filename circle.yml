@@ -15,9 +15,6 @@ machine:
 
 dependencies:
   pre:
-    - mysql --version
-    - mysqldump --version
-    # - sudo apt-get update; sudo apt-get install mysql-client
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update
     - sudo /opt/google-cloud-sdk/bin/gcloud --quiet components update kubectl
     # This is not really used right now..
@@ -38,6 +35,8 @@ dependencies:
     - kubectl get serviceaccounts
     # Using a separate tag command until Docker 1.10 is available on CircleCI, then we can use two tags in the build command above
     # - gcloud docker push
+    - echo "{build: ${CIRCLE_BUILD_NUM}}" > www/version.json
+    - cat www/version.json
     - echo "ENV CBUILDNUM ${CIRCLE_BUILD_NUM}" >> ./Dockerfile
     - echo "ENV CBRANCH ${CIRCLE_BRANCH}" >> ./Dockerfile
     - cat Dockerfile
@@ -70,11 +69,11 @@ deployment:
     branch: master
     commands:
       - echo "Deployment [MASTER / Preprod] ${IMAGE}"
-      - kubectl patch deployment ${KUBERNETES_DEPLOYMENT} -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"${KUBERNETES_DEPLOYMENT}\",\"image\":\"${IMAGE}\"}]}}}}"
+      - kubectl patch deployment ${KUBERNETES_DEPLOYMENT_TESTING} -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"${KUBERNETES_DEPLOYMENT_TESTING}\",\"image\":\"${IMAGE}\"}]}}}}"
       - ./bin/migratedb.sh
       # - mysqldump -u ${DBUSER} --password="${DBPASSWORD}" -h ${DBHOST} --all-databases | mysql -u ${TESTING_DBUSER} --password="${TESTING_DBPASSWORD}" -h ${TESTING_DBHOST} ${TESTING_DBNAME}
   prod:
     branch: stable
     commands:
       - echo "Deployment [STABLE / Production] ${IMAGE}"
-      - kubectl patch deployment ${KUBERNETES_DEPLOYMENT_TESTING} -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"${KUBERNETES_DEPLOYMENT}\",\"image\":\"${IMAGE}\"}]}}}}"
+      - kubectl patch deployment ${KUBERNETES_DEPLOYMENT} -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"${KUBERNETES_DEPLOYMENT}\",\"image\":\"${IMAGE}\"}]}}}}"
