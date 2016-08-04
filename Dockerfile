@@ -36,9 +36,10 @@ RUN chmod -R a+rX /usr/src/wordpress
 RUN curl -o /tmp/twentyeleven.zip https://downloads.wordpress.org/theme/twentyeleven.2.4.zip
 RUN unzip /tmp/twentyeleven.zip -d /usr/src/wordpress/wp-content/themes/
 RUN rm -rf /tmp/twentyeleven.zip && rm -rf /tmp/dataporten-oauth.zip
-RUN echo "ok" > /usr/src/wordpress/ok.html
+# RUN echo "ok" > /usr/src/wordpress/ok.html
 
+COPY www/ /usr/src/wordpress/
 COPY feidernd /usr/src/wordpress/wp-content/themes/feidernd
-COPY www/version.php /usr/src/wordpress/version/index.php
+# COPY www/version.php /usr/src/wordpress/version/index.php
 
 VOLUME volume/ /var/www/
