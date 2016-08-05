@@ -57,7 +57,7 @@ COPY bin/entrypoint.sh /entrypoint.sh
 RUN git clone https://github.com/Otto42/simple-twitter-connect.git /app/wordpress/wp-content/plugins/simple-twitter-connect
 
 COPY www/ /app/wordpress
-
+RUN chmod 755 /app/wordpress/wp-content
 RUN mkdir /app/wordpress/wp-content/uploads
 RUN mkdir /app/wordpress/wp-content/cache
 
