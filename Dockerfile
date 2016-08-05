@@ -1,7 +1,7 @@
 FROM php:7-apache
 
 
-RUN a2enmod rewrite expires
+RUN a2enmod rewrite expires ssl
 
 # install the PHP extensions we need
 RUN apt-get update && apt-get install -y libpng12-dev libjpeg-dev unzip git libcurl4-openssl-dev  && rm -rf /var/lib/apt/lists/* \
@@ -31,11 +31,11 @@ RUN curl -o /tmp/composer.phar http://getcomposer.org/composer.phar \
 RUN composer install
 RUN cp -rT plugins/ wordpress/wp-content/plugins/
 
-# RUN curl -o /tmp/markdown.zip https://littoral.michelf.ca/code/php-markdown/php-markdown-extra-1.2.8.zip \
-#   	&& unzip /tmp/markdown.zip -d  /app/wordpress/wp-content/plugins \
-#   	&& mv  /app/wordpress/wp-content/plugins/PHP\ Markdown\ Extra\ 1.2.8/markdown.php  /app/wordpress/wp-content/plugins/ \
-#   	&& rm -rf  /app/wordpress/wp-content/plugins/PHP\ Markdown\ Extra\ 1.2.8/ \
-# 	&& rm -rf /tmp/markdown.zip
+RUN curl -o /tmp/markdown.zip https://littoral.michelf.ca/code/php-markdown/php-markdown-extra-1.2.8.zip \
+  	&& unzip /tmp/markdown.zip -d  /app/wordpress/wp-content/plugins \
+  	&& mv  /app/wordpress/wp-content/plugins/PHP\ Markdown\ Extra\ 1.2.8/markdown.php  /app/wordpress/wp-content/plugins/ \
+  	&& rm -rf  /app/wordpress/wp-content/plugins/PHP\ Markdown\ Extra\ 1.2.8/ \
+	&& rm -rf /tmp/markdown.zip
 
 # RUN curl -o /tmp/wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 # RUN cd /tmp && chmod +x wp-cli.phar \
@@ -45,7 +45,8 @@ RUN cp -rT plugins/ wordpress/wp-content/plugins/
 # RUN cat .htaccess_extra >> .htaccess && rm .htaccess_extra && cat .htaccess
 # RUN cat /entrypoint.sh
 
-
+COPY etc/apache.crt /apache.crt
+COPY etc/apache.key /apache.key
 
 #### --- Configure entrypoint ---
 COPY bin/entrypoint.sh /entrypoint.sh
@@ -67,6 +68,7 @@ RUN chown -R www-data:www-data /app/wordpress
 # VOLUME /app/wordpress/wp-content/cache
 EXPOSE 80
 
+COPY etc/dataporten_oauth /app/wordpress/wp-content/plugins/dataporten-oauth
 
 RUN curl -o /app/wordpress/wp-content/themes/feidernd/fonts/colfaxLight.woff http://mal.uninett.no/uninett-theme/fonts/colfaxLight.woff
 RUN curl -o /app/wordpress/wp-content/themes/feidernd/fonts/colfaxMedium.woff http://mal.uninett.no/uninett-theme/fonts/colfaxMedium.woff
