@@ -6,6 +6,13 @@
 	},
 	"spec": {
 		"replicas": 1,
+		"strategy": {
+			"type": "RollingUpdate",
+			"rollingUpdate": {
+				"maxUnavailable": 0,
+				"maxSurge": 1
+			}
+		},
 		"template": {
 			"metadata": {
 				"labels": {
@@ -16,7 +23,7 @@
 			"spec": {
 				"containers": [{
 					"name": "feidernd",
-					"image": "uninettno/rnd-feide-no:build-46",
+					"image": "uninettno/rnd-feide-no:build-66",
 					"resources": {
 						"requests": {
 							"cpu": "10m"

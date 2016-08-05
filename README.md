@@ -68,8 +68,8 @@ docker run -p 8080:80 --env-file etc/ENV uninettno/feidernd:testing
 
 ```
 kubectl --namespace production replace secret feidernd-testing -f etc-kube/secrets-testing.yaml
-kubectl --namespace production replace secret feidernd -f etc-kube/secrets.yaml
 kubectl --namespace production replace deployment feidernd-testing -f etc-kube/deployment-testing.json
+kubectl --namespace production replace secret feidernd -f etc-kube/secrets.yaml
 kubectl --namespace production replace deployment feidernd -f etc-kube/deployment.json
 ```
 
