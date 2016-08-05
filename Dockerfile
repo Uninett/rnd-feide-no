@@ -55,7 +55,7 @@ COPY www/ /app/wordpress
 RUN chmod 755 /app/wordpress/wp-content
 
 RUN mkdir /app/wordpress/wp-content/uploads
-RUN mkdir /app/wordpress/wp-content/cache
+# RUN mkdir /app/wordpress/wp-content/cache
 
 RUN chmod 777 /app/wordpress/wp-content/uploads
 RUN chmod 777 /app/wordpress/wp-content/cache
@@ -64,7 +64,7 @@ RUN chmod -R a+rX /app/wordpress
 RUN chown -R www-data:www-data /app/wordpress
 
 
-VOLUME /app/wordpress/wp-content/cache
+# VOLUME /app/wordpress/wp-content/cache
 EXPOSE 80
 
 
