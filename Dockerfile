@@ -32,14 +32,14 @@ RUN composer install
 RUN cp -rT plugins/ wordpress/wp-content/plugins/
 
 RUN curl -o /tmp/markdown.zip https://littoral.michelf.ca/code/php-markdown/php-markdown-extra-1.2.8.zip \
-  && unzip /tmp/markdown.zip -d  /app/wordpress/wp-content/plugins \
-  && mv  /app/wordpress/wp-content/plugins/PHP\ Markdown\ Extra\ 1.2.8/markdown.php  /app/wordpress/wp-content/plugins/ \
-  && rm -rf  /app/wordpress/wp-content/plugins/PHP\ Markdown\ Extra\ 1.2.8/ \
+  	&& unzip /tmp/markdown.zip -d  /app/wordpress/wp-content/plugins \
+  	&& mv  /app/wordpress/wp-content/plugins/PHP\ Markdown\ Extra\ 1.2.8/markdown.php  /app/wordpress/wp-content/plugins/ \
+  	&& rm -rf  /app/wordpress/wp-content/plugins/PHP\ Markdown\ Extra\ 1.2.8/ \
 	&& rm -rf /tmp/markdown.zip
 
-RUN curl -o /tmp/wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-RUN cd /tmp && chmod +x wp-cli.phar \
-  && mv wp-cli.phar /usr/local/bin/wp
+# RUN curl -o /tmp/wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+# RUN cd /tmp && chmod +x wp-cli.phar \
+#   && mv wp-cli.phar /usr/local/bin/wp
 
 # COPY etc/.htaccess_extra .htaccess_extra
 # RUN cat .htaccess_extra >> .htaccess && rm .htaccess_extra && cat .htaccess
