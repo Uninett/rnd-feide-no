@@ -27,10 +27,13 @@
 		"wpackagist-plugin/simple-custom-post-type-archives": "~0.9.3",
 		"wpackagist-plugin/twitter-for-wordpress": "~1.9.7",
 		"wpackagist-plugin/wp-to-twitter": "~3.2.10",
-		"wpackagist-plugin/wptouch": "~4.1.4",
+
 		"wpackagist-plugin/wp-stateless": "~1.9.0",
 		"wpackagist-plugin/w3-total-cache": "~0.9.4.1",
 		"wpackagist-plugin/syntaxhighlighter": "~3.2.1"
+	},
+	"_requireDisabled": {
+		"wpackagist-plugin/wptouch": "~4.1.4",
 	},
 	"extra": {
 		"wordpress-install-dir": "wordpress",
