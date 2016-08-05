@@ -23,10 +23,11 @@
 			"spec": {
 				"containers": [{
 					"name": "feidernd",
-					"image": "uninettno/rnd-feide-no:build-69",
+					"image": "uninettno/rnd-feide-no:build-72",
 					"resources": {
 						"requests": {
-							"cpu": "10m"
+							"cpu": "10m",
+							"memory": "200Mi"
 						},
 						"limits": {
 							"memory": "800Mi"
@@ -75,7 +76,7 @@
   					},
             {
   						"name": "TLS",
-  						"value": "false"
+  						"value": "true"
   					},
             {
   						"name": "DATAPORTEN_CLIENTID",
@@ -194,7 +195,25 @@
                   "key": "nonce-salt"
                 }
               }
-  					}
+  					},
+						{
+							"name": "STATELESS_MEDIA_BUCKET",
+							"valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd-testing",
+                  "key": "stateless-media-bucket"
+                }
+              }
+						},
+						{
+							"name": "STATELESS_MEDIA_SERVICE_ACCOUNT",
+							"valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd-testing",
+                  "key": "stateless-media-account"
+                }
+              }
+						}
           ],
 					"imagePullPolicy": "Always",
 					"ports": [{
