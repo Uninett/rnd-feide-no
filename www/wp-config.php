@@ -67,8 +67,9 @@ define( 'LOGGED_IN_SALT',   getenv('LOGGED_IN_SALT'));
 define( 'NONCE_SALT',       getenv('NONCE_SALT'));
 
 
-define( 'WP_STATELESS_MEDIA_BUCKET', 			getenv('STATELESS_MEDIA_BUCKET'));
+define( 'WP_STATELESS_MEDIA_BUCKET', 			  getenv('STATELESS_MEDIA_BUCKET'));
 define( 'WP_STATELESS_MEDIA_MODE', 				  'cdn');
+define( 'WP_STATELESS_MEDIA_ROOT_DIR',      'files/');
 define( 'WP_STATELESS_MEDIA_KEY_FILE_PATH', '/etc/secrets/gcserviceaccount.json');
 define( 'WP_STATELESS_MEDIA_SERVICE_ACCOUNT', 	getenv('STATELESS_MEDIA_SERVICE_ACCOUNT'));
 
@@ -136,7 +137,7 @@ if (getenv('TLS') === 'true' && isset($headers["x-forwarded-proto"]) && $headers
   exit();
 }
 if (getenv('TLS') === 'true') {
-  $_SERVER['HTTPS']='on';  
+  $_SERVER['HTTPS']='on';
 }
 
 
