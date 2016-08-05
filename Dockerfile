@@ -19,6 +19,8 @@ RUN { \
 		echo 'opcache.enable_cli=1'; \
 	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
+COPY etc/apache-vhost.conf /etc/apache2/sites-enabled/000-default.conf
+
 RUN mkdir -p /app
 COPY etc/composer.json /app/
 WORKDIR /app
@@ -45,44 +47,25 @@ RUN cd /tmp && chmod +x wp-cli.phar \
 
 
 
-
 #### --- Configure entrypoint ---
 COPY bin/entrypoint.sh /entrypoint.sh
-# RUN sed -i '$ d' /entrypoint.sh
-# RUN echo 'wp plugin activate dataporten-oauth --allow-root' >> /entrypoint.sh
-# RUN echo 'cat .htaccess >> /.htaccess_extra && cat /.htaccess_extra > .htaccess' >> /entrypoint.sh
-# RUN echo 'exec "$@"' >> /entrypoint.sh
-
 
 COPY www/ /app/wordpress
+
 RUN chmod 755 /app/wordpress/wp-content
+
 RUN mkdir /app/wordpress/wp-content/uploads
 RUN mkdir /app/wordpress/wp-content/cache
 
-
 RUN chmod 777 /app/wordpress/wp-content/uploads
 RUN chmod 777 /app/wordpress/wp-content/cache
-
-
-# RUN curl -o /tmp/twentyeleven.zip https://downloads.wordpress.org/theme/twentyeleven.2.4.zip
-# RUN unzip /tmp/twentyeleven.zip -d /app/wordpress/wp-content/themes/
-# RUN rm -rf /tmp/twentyeleven.zip
 
 RUN chmod -R a+rX /app/wordpress
 RUN chown -R www-data:www-data /app/wordpress
 
 
-RUN ls -la /app/wordpress && echo "A"
-RUN ls -la /app/ && echo "A"
-
-# RUN cat /usr/src/wordpress/wp-settings.php
-
 VOLUME /app/wordpress/wp-content/cache
 EXPOSE 80
-
-COPY etc/apache-vhost.conf /etc/apache2/sites-enabled/000-default.conf
-# RUN ls -la /etc/apache2/sites-enabled
-# RUN cat /etc/apache2/sites-enabled/000-default.conf
 
 
 RUN curl -o /app/wordpress/wp-content/themes/feidernd/fonts/colfaxLight.woff http://mal.uninett.no/uninett-theme/fonts/colfaxLight.woff

@@ -23,13 +23,14 @@
 			"spec": {
 				"containers": [{
 					"name": "feidernd-testing",
-					"image": "uninettno/rnd-feide-no:build-66",
+					"image": "uninettno/rnd-feide-no:build-69",
 					"resources": {
 						"requests": {
 							"cpu": "10m"
 						},
 						"limits": {
-							"cpu": "150m"
+							"cpu": "150m",
+							"memory": "300Mi"
 						}
 					},
 					"env": [
