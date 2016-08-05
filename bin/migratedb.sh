@@ -12,4 +12,4 @@ export TESTING_DBPASSWORD=`kubectl --namespace production get secrets feidernd-t
 echo "mysqldump -u ${DBUSER} --password="xxx" -h ${DBHOST} ${DBNAME}"
 echo "mysql -u ${TESTING_DBUSER} --password="xxx" -h ${TESTING_DBHOST} ${TESTING_DBNAME}"
 
-mysqldump -u ${DBUSER} --password="${DBPASSWORD}" -h ${DBHOST} ${DBNAME} | mysql -u ${TESTING_DBUSER} --password="${TESTING_DBPASSWORD}" -h ${TESTING_DBHOST} ${TESTING_DBNAME}
+mysqldump --add-drop-database -u ${DBUSER} --password="${DBPASSWORD}" -h ${DBHOST} ${DBNAME} | mysql -u ${TESTING_DBUSER} --password="${TESTING_DBPASSWORD}" -h ${TESTING_DBHOST} ${TESTING_DBNAME}
