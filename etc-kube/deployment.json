@@ -70,6 +70,33 @@
                 }
               }
   					},
+						{
+  						"name": "WORDPRESS_DB_USER_TEST",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd-testing",
+                  "key": "dbuser"
+                }
+              }
+  					},
+            {
+  						"name": "WORDPRESS_DB_PASSWORD_TEST",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd-testing",
+                  "key": "dbpassword"
+                }
+              }
+  					},
+            {
+  						"name": "WORDPRESS_DB_NAME_TEST",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd-testing",
+                  "key": "dbname"
+                }
+              }
+  					},
             {
   						"name": "HOST",
   						"value": "rnd.feide.no"
