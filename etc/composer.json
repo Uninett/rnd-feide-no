@@ -16,7 +16,6 @@
 		"johnpbloch/wordpress-core-installer": "~0.2",
 		"wpackagist-plugin/wordpress-seo": "~3.3",
 		"wpackagist-plugin/dataporten-oauth": "~2.1",
-		"wpackagist-plugin/disable-comments": "~1.5",
 		"wpackagist-plugin/w3-total-cache": "~0.9.4.1",
 		"wpackagist-plugin/syntaxhighlighter": "~3.2.1",
 		"wpackagist-plugin/jetpack": "~4.0",
@@ -26,7 +25,8 @@
 		"wpackagist-plugin/post-type-switcher": "~2.0.1",
 		"wpackagist-plugin/embed-github-gist": "0.13",
 		"wpackagist-plugin/simple-custom-post-type-archives": "~0.9.3",
-		"wpackagist-plugin/wp-stateless": "~1.9.0"
+		"wpackagist-plugin/wp-stateless": "~1.9.0",
+		"wpackagist-plugin/php-code-widget": "~2.3"
 	},
 	"_requireDisabled": {
 		"wpackagist-plugin/disable-xml-rpc": "~1.0.1",
