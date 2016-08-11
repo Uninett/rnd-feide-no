@@ -4,7 +4,7 @@ FROM php:7-apache
 RUN a2enmod rewrite expires
 
 # install the PHP extensions we need
-RUN apt-get update && apt-get install -y libpng12-dev libjpeg-dev unzip git libcurl4-openssl-dev  && rm -rf /var/lib/apt/lists/* \
+RUN apt-get update && apt-get install -y libpng12-dev libjpeg-dev mysql-client unzip git libcurl4-openssl-dev  && rm -rf /var/lib/apt/lists/* \
 	&& docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
 	&& docker-php-ext-install gd mysqli opcache curl
 
@@ -49,10 +49,9 @@ RUN curl -o /tmp/markdown.zip https://littoral.michelf.ca/code/php-markdown/php-
 
 #### --- Configure entrypoint ---
 COPY bin/entrypoint.sh /entrypoint.sh
-COPY bin /app/bin/
+
 COPY www/ /app/wordpress
 
-RUN chmod +x /app/bin/migratedb.sh
 RUN chmod 755 /app/wordpress/wp-content
 
 RUN mkdir /app/wordpress/wp-content/uploads
