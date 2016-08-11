@@ -69,7 +69,8 @@ deployment:
     commands:
       - echo "Deployment [MASTER / Preprod] ${IMAGE}"
       - kubectl patch deployment ${KUBERNETES_DEPLOYMENT_TESTING} -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"${KUBERNETES_DEPLOYMENT_TESTING}\",\"image\":\"${IMAGE}\"}]}}}}"
-      - ./bin/migratedb.sh
+      # - kubectl exec deployment ${KUBERNETES_DEPLOYMENT_TESTING} -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"${KUBERNETES_DEPLOYMENT_TESTING}\",\"image\":\"${IMAGE}\"}]}}}}"
+      # - ./bin/migratedb.sh
   prod:
     branch: stable
     commands:
