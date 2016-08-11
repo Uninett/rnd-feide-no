@@ -23,7 +23,7 @@
 			"spec": {
 				"containers": [{
 					"name": "feidernd",
-					"image": "uninettno/rnd-feide-no:build-72",
+					"image": "uninettno/rnd-feide-no:build-93",
 					"resources": {
 						"requests": {
 							"cpu": "10m",

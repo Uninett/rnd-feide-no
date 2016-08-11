@@ -73,6 +73,7 @@ kubectl --namespace production replace secret feidernd -f etc-kube/secrets.yaml
 kubectl --namespace production replace deployment feidernd -f etc-kube/deployment.json
 ```
 
+
 ----
 
 
