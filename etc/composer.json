@@ -15,7 +15,7 @@
 		"johnpbloch/wordpress": "~4.5.2",
 		"johnpbloch/wordpress-core-installer": "~0.2",
 		"wpackagist-plugin/wordpress-seo": "~3.3",
-		"wpackagist-plugin/dataporten-oauth": "~2.1",
+		"wpackagist-plugin/dataporten-oauth": "~2.5",
 		"wpackagist-plugin/w3-total-cache": "~0.9.4.1",
 		"wpackagist-plugin/syntaxhighlighter": "~3.2.1",
 		"wpackagist-plugin/jetpack": "~4.0",
