@@ -69,7 +69,7 @@ deployment:
     commands:
       - echo "Deployment [MASTER / Preprod] ${IMAGE}"
       - kubectl patch deployment ${KUBERNETES_DEPLOYMENT_TESTING} -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"${KUBERNETES_DEPLOYMENT_TESTING}\",\"image\":\"${IMAGE}\"}]}}}}"
-      - kubectl exec `kubectl --namespace production get pods -l 'appid=feidernd'  -o jsonpath={.items[*].metadata.name}` /app/bin/migratedb.sh
+      # - kubectl exec `kubectl --namespace production get pods -l 'appid=feidernd'  -o jsonpath={.items[*].metadata.name}` /app/bin/migratedb.sh
       # - kubectl exec deployment ${KUBERNETES_DEPLOYMENT_TESTING} -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"${KUBERNETES_DEPLOYMENT_TESTING}\",\"image\":\"${IMAGE}\"}]}}}}"
       # - ./bin/migratedb.sh
   prod:
