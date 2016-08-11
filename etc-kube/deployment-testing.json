@@ -23,7 +23,7 @@
 			"spec": {
 				"containers": [{
 					"name": "feidernd-testing",
-					"image": "uninettno/rnd-feide-no:build-69",
+					"image": "uninettno/rnd-feide-no:build-92",
 					"resources": {
 						"requests": {
 							"cpu": "10m"
@@ -66,6 +66,33 @@
               "valueFrom": {
                 "secretKeyRef": {
                   "name": "feidernd-testing",
+                  "key": "dbname"
+                }
+              }
+  					},
+						{
+  						"name": "WORDPRESS_DB_USER_PROD",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd",
+                  "key": "dbuser"
+                }
+              }
+  					},
+            {
+  						"name": "WORDPRESS_DB_PASSWORD_PROD",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd",
+                  "key": "dbpassword"
+                }
+              }
+  					},
+            {
+  						"name": "WORDPRESS_DB_NAME_PROD",
+              "valueFrom": {
+                "secretKeyRef": {
+                  "name": "feidernd",
                   "key": "dbname"
                 }
               }

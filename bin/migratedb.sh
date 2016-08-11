@@ -9,6 +9,17 @@ export TESTING_DBNAME=`kubectl --namespace production get secrets feidernd-testi
 export TESTING_DBUSER=`kubectl --namespace production get secrets feidernd-testing  -o 'go-template={{index .data "dbuser"}}' | base64 --decode`
 export TESTING_DBPASSWORD=`kubectl --namespace production get secrets feidernd-testing  -o 'go-template={{index .data "dbpassword"}}' | base64 --decode`
 
+
+
+# declare -x WORDPRESS_DB_HOST
+# declare -x WORDPRESS_DB_NAME
+# declare -x WORDPRESS_DB_NAME_PROD
+# declare -x WORDPRESS_DB_PASSWORD
+# declare -x WORDPRESS_DB_PASSWORD_PROD
+# declare -x WORDPRESS_DB_USER
+# declare -x WORDPRESS_DB_USER_PROD
+
+
 echo "mysqldump -u ${DBUSER} --password="xxx" -h ${DBHOST} ${DBNAME}"
 echo "mysql -u ${TESTING_DBUSER} --password="xxx" -h ${TESTING_DBHOST} ${TESTING_DBNAME}"
 

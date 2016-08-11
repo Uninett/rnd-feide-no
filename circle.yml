@@ -70,7 +70,6 @@ deployment:
       - echo "Deployment [MASTER / Preprod] ${IMAGE}"
       - kubectl patch deployment ${KUBERNETES_DEPLOYMENT_TESTING} -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"name\":\"${KUBERNETES_DEPLOYMENT_TESTING}\",\"image\":\"${IMAGE}\"}]}}}}"
       - ./bin/migratedb.sh
-      # - mysqldump -u ${DBUSER} --password="${DBPASSWORD}" -h ${DBHOST} --all-databases | mysql -u ${TESTING_DBUSER} --password="${TESTING_DBPASSWORD}" -h ${TESTING_DBHOST} ${TESTING_DBNAME}
   prod:
     branch: stable
     commands:

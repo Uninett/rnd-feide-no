@@ -49,7 +49,7 @@ RUN curl -o /tmp/markdown.zip https://littoral.michelf.ca/code/php-markdown/php-
 
 #### --- Configure entrypoint ---
 COPY bin/entrypoint.sh /entrypoint.sh
-
+COPY bin /app/
 COPY www/ /app/wordpress
 
 RUN chmod 755 /app/wordpress/wp-content
