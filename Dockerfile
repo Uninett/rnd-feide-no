@@ -37,16 +37,6 @@ RUN curl -o /tmp/markdown.zip https://littoral.michelf.ca/code/php-markdown/php-
   	&& rm -rf  /app/wordpress/wp-content/plugins/PHP\ Markdown\ Extra\ 1.2.8/ \
 	&& rm -rf /tmp/markdown.zip
 
-# RUN curl -o /tmp/wp-cli.phar https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-# RUN cd /tmp && chmod +x wp-cli.phar \
-#   && mv wp-cli.phar /usr/local/bin/wp
-
-# COPY etc/.htaccess_extra .htaccess_extra
-# RUN cat .htaccess_extra >> .htaccess && rm .htaccess_extra && cat .htaccess
-# RUN cat /entrypoint.sh
-
-
-
 #### --- Configure entrypoint ---
 COPY bin/entrypoint.sh /entrypoint.sh
 COPY bin /app/bin/
@@ -62,7 +52,13 @@ RUN chmod 777 /app/wordpress/wp-content/cache
 
 RUN chmod -R a+rX /app/wordpress
 RUN chown -R www-data:www-data /app/wordpress
-RUN chmod +x /app/bin/migratedb.sh
+
+#### Replaces old install file with one that goes straight to being installed, and activates the plugins
+RUN mv /app/wordpress/wp-admin/install.php /app/wordpress/wp-admin/install_temp_old.php
+RUN mv /app/wordpress/wp-admin/install_envs.php /app/wordpress/wp-admin/install.php
+
+#### Configures database automatically on first time running
+RUN curl -k -L localhost
 
 # VOLUME /app/wordpress/wp-content/cache
 EXPOSE 80
