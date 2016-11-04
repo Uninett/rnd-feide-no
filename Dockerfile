@@ -58,7 +58,7 @@ RUN mv /app/wordpress/wp-admin/install.php /app/wordpress/wp-admin/install_temp_
 RUN mv /app/wordpress/wp-admin/install_envs.php /app/wordpress/wp-admin/install.php
 
 #### Configures database automatically on first time running
-RUN curl -k -L localhost
+# RUN curl -k -L localhost
 
 # VOLUME /app/wordpress/wp-content/cache
 EXPOSE 80
