@@ -175,38 +175,31 @@ $scripts_to_print = array( 'jquery' );
 			wp_die( $wpdb->error->get_error_message() );
 
 		$scripts_to_print[] = 'user-profile';
+		$weblog_title 	= getenv('HOST');
+		$user_name 		= getenv('DATAPORTEN_CREATOR');
+		$public 		= 1;
+		$identity 		= $user_name;
 
-		// Fill in the data we gathered
-		$weblog_title = get_env('BLOG_TITLE');
-		$user_name = get_env('WP_USERNAME');
-		$admin_password = get_env('WP_PASSWORD');
-		$admin_email  = get_env('WP_EMAIL');
-		$public       = get_env('WP_PUBLIC');
+		$wpdb->show_errors();
+		$result = wp_install( $weblog_title, $user_name, "foo@foo.foo", $public, '', wp_slash( wp_generate_password() ), WPLANG );
+		add_user_meta($result["user_id"], 'dataporten_identity', 'dataporten|' . $identity . '|' . time());
+			require_once( ABSPATH . "/wp-load.php" ); //not sure if this line is needed
+                    //activate_plugin() is here:
+                    require_once(  ABSPATH . "/wp-admin/includes/plugin.php");
+                    $plugins = array_keys(get_plugins());
+                    foreach ($plugins as $plugin){
+                            //$plugin_path = $wordpress_path."wp-content/plugins/{$plugin}.php";
+                            activate_plugin($plugin);
+                    }
+		// Log the user in and send them to wp-admin:
+		if ( ! headers_sent() ) {              
+            		wp_set_auth_cookie( $result['user_id'], true, is_ssl() );
+            		wp_redirect( admin_url() );
+            		exit;
+        		}
 
-		// Check email address.
-		$error = false;
-
-		if ( $error === false ) {
-			$wpdb->show_errors();
-			$result = wp_install( $weblog_title, $user_name, $admin_email, $public, '', wp_slash( $admin_password ), WPLANG );
-
- 			require_once( ABSPATH . "/wp-load.php" ); //not sure if this line is needed
-                        //activate_plugin() is here:
-                        require_once(  ABSPATH . "/wp-admin/includes/plugin.php");
-                        $plugins = array_keys(get_plugins());
-                        foreach ($plugins as $plugin){
-                                //$plugin_path = $wordpress_path."wp-content/plugins/{$plugin}.php";
-                                activate_plugin($plugin);
-                        }
-			// Log the user in and send them to wp-admin:
-			if ( ! headers_sent() ) {              
-                		wp_set_auth_cookie( $result['user_id'], true, is_ssl() );
-                		wp_redirect( admin_url() );
-                		exit;
-            		}
-
-            // If headers have already been sent, fall back to a "Success!" message:
-            display_header();
+        // If headers have already been sent, fall back to a "Success!" message:
+        display_header();
 
 ?>
 
@@ -214,26 +207,9 @@ $scripts_to_print = array( 'jquery' );
 
 <p><?php _e( 'WordPress has been installed. Thank you, and enjoy!' ); ?></p>
 
-<table class="form-table install-success">
-	<tr>
-		<th><?php _e( 'Username' ); ?></th>
-		<td><?php echo esc_html( sanitize_user( $user_name, true ) ); ?></td>
-	</tr>
-	<tr>
-		<th><?php _e( 'Password' ); ?></th>
-		<td><?php
-		if ( ! empty( $result['password'] ) && empty( $admin_password_check ) ): ?>
-			<code><?php echo esc_html( $result['password'] ) ?></code><br />
-		<?php endif ?>
-			<p><?php echo $result['password_message'] ?></p>
-		</td>
-	</tr>
-</table>
-
 <p class="step"><a href="<?php echo esc_url( wp_login_url() ); ?>" class="button button-large"><?php _e( 'Log In' ); ?></a></p>
 
 <?php
-		}
 		
 
 if ( ! wp_is_mobile() ) {
