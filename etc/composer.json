@@ -10,12 +10,15 @@
 		"type": "composer",
 		"url": "https://wpackagist.org"
 	}],
+	"_require": {
+		"wpackagist-plugin/dataporten-oauth": "~2.5",
+	},
 	"require": {
 		"composer/installers": "~1.0",
 		"johnpbloch/wordpress": "~4.7",
 		"johnpbloch/wordpress-core-installer": "~0.2",
 		"wpackagist-plugin/wordpress-seo": "~3.3",
-		"wpackagist-plugin/dataporten-oauth": "~2.5",
+
 		"wpackagist-plugin/w3-total-cache": "~0.9.5",
 		"wpackagist-plugin/enlighter": "~3.1",
 		"wpackagist-plugin/jetpack": "~4.0",
