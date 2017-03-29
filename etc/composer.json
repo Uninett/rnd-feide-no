@@ -11,7 +11,7 @@
 		"url": "https://wpackagist.org"
 	}],
 	"_require": {
-		"wpackagist-plugin/dataporten-oauth": "~2.5",
+		"wpackagist-plugin/dataporten-oauth": "~2.5"
 	},
 	"require": {
 		"composer/installers": "~1.0",
