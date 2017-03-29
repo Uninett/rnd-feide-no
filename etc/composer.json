@@ -16,7 +16,7 @@
 		"johnpbloch/wordpress-core-installer": "~0.2",
 		"wpackagist-plugin/wordpress-seo": "~3.3",
 		"wpackagist-plugin/dataporten-oauth": "~2.5",
-		"wpackagist-plugin/w3-total-cache": "~0.9.4.1",
+		"wpackagist-plugin/w3-total-cache": "~0.9.5",
 		"wpackagist-plugin/enlighter": "~3.1",
 		"wpackagist-plugin/jetpack": "~4.0",
 		"wpackagist-plugin/google-analytics-for-wordpress": "~5.5",
